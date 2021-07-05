@@ -1,0 +1,55 @@
+<app-teacher-nav></app-teacher-nav>
+
+<p *ngIf="!classes"><em>Loading.....</em></p>
+
+<div *ngIf="classes">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>ClassId</th>
+        <th>Number of Student</th>
+        <th>Grades</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let class of classes; let i = index">
+        <td> {{ i + 1 }}</td>
+        <td> {{ class.classId }}</td>
+        <td> {{ class.numOfStudent }}</td>
+        <td>
+          <button (click)="itemsVisibility[i] = !itemsVisibility[i];
+                  getStudentList(class.classId)"
+                  type="button" class="btn btn-info">
+            Start Grading
+          </button>
+          <table *ngIf="itemsVisibility[i]" class='table table-striped'>
+            <thead>
+              <tr>
+                <th>StudentId</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="students">
+              <tr *ngFor="let student of students">
+                <td>{{  student.studentId }}</td>
+                <td>{{  student.name }}</td>
+                <td>
+                  <form #gradeForm ="ngForm" (ngSubmit)="gradeStudent(gradeForm.value)">
+                      <label for="gpa">
+                        GPA
+                      </label>
+                      <input  type="text" name="gpa" #gpa="ngModel" [(ngModel)]="student.gpa"/>
+                      <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="student.studentId" />
+                    <button class="btn btn-primary" type="submit">Save</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

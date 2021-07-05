@@ -1,0 +1,53 @@
+<app-teacher-nav></app-teacher-nav>
+
+<p *ngIf="!classes"><em>Loading.....</em></p>
+
+<div *ngIf="classes">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>ClassId</th>
+        <th>CourseId</th>
+        <th>TeacherId</th>
+        <th>NumOfStudent</th>
+        <th>Student's List</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let class of classes; let i = index">
+        <td> {{ i + 1 }}</td>
+        <td> {{ class.classId }}</td>
+        <td> {{ class.courseId }} </td>
+        <td> {{ class.teacherId }}</td>
+        <td> {{ class.numOfStudent }}</td>
+        <td>
+          <button (click)="itemsVisibility[i] = !itemsVisibility[i];
+                  getStudentList(class.classId)"
+                  type="button" class="btn btn-info">
+            Click to view the Students List
+          </button>
+          <table *ngIf="itemsVisibility[i]" class='table table-striped'>
+            <thead>
+              <tr>
+                <th>StudentId</th>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="students">
+              <tr *ngFor="let student of students">
+                <td>{{  student.studentId }}</td>
+                <td>{{  student.name }}</td>
+                <td>{{  student.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+
+
