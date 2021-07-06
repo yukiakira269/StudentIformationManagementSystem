@@ -12,9 +12,6 @@ import { catchError, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
-  
-
   client: HttpClient;
   baseUrl: string;
   user: User;

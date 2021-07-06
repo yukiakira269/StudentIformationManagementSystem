@@ -1,12 +1,10 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
-namespace SIMS.Models
+namespace SIMS.DataTier.BusinessObject
 {
     public partial class SIMSContext : DbContext
     {
@@ -31,14 +29,10 @@ namespace SIMS.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true);
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot configuration = builder.Build();
-                //optionsBuilder.UseSqlServer("Name=ConnectionStrings:SIMS");
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("SIMS"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=mssql-35163-0.cloudclusters.net,35200;uid=SuperAdmin;pwd=Sa123456;database=SIMS;TrustServerCertificate=True");
             }
         }
 
@@ -183,7 +177,7 @@ namespace SIMS.Models
 
             modelBuilder.Entity<Grade>(entity =>
             {
-                entity.HasKey(e => e.StudentId)
+                entity.HasKey(e => new { e.StudentId, e.CourseId })
                     .HasName("PK_schedules");
 
                 entity.ToTable("grades");
@@ -193,21 +187,17 @@ namespace SIMS.Models
                     .IsUnicode(false)
                     .HasColumnName("studentID");
 
-                entity.Property(e => e.Component)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("component");
-
-                entity.Property(e => e.ComponentGrade).HasColumnName("componentGrade");
-
                 entity.Property(e => e.CourseId)
                     .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("courseID");
 
+                entity.Property(e => e.Grade1).HasColumnName("grade");
+
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Grades)
                     .HasForeignKey(d => d.CourseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_grades_courses");
             });
 
@@ -274,12 +264,6 @@ namespace SIMS.Models
                     .HasColumnName("parentsPhone");
 
                 entity.HasOne(d => d.StudentNavigation)
-                    .WithOne(p => p.Student)
-                    .HasForeignKey<Student>(d => d.StudentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_students_grades");
-
-                entity.HasOne(d => d.Student1)
                     .WithOne(p => p.Student)
                     .HasForeignKey<Student>(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

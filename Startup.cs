@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SIMS.Models;
 using System.Text.Json;
 using System;
 using System.Web.Http;
+using SIMS.DataTier.BusinessObject;
 
 namespace SIMS
 {

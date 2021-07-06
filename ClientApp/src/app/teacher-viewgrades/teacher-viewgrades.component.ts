@@ -10,8 +10,11 @@ import { FormBuilder, FormControl } from '@angular/forms';
 export class TeacherViewgradesComponent {
 
   itemsVisibility = [];
+  itemsVisibility2 = [];
+
   classes: Class[];
   students: Student[];
+  grades: Grade[];
   client: HttpClient;
   url: string = "";
 
@@ -31,9 +34,22 @@ export class TeacherViewgradesComponent {
     return this.client.get<Class[]>(this.url + "teacher/GetClassList", { params });
   }
 
+  getGrade(studentId: string) {
+    let params = new HttpParams()
+      .append('id', studentId);
+    return this.client.get<Grade[]>(this.url + "teacher/GetGrade", { params })
+      .subscribe(
+        res => {
+          this.grades = res;
+          console.log("Grade" + res)
+        },
+      err => console.error(err)
+    );
+  }
+
   gradeStudent(f) {
     var data = JSON.stringify(f);
-    var headers = new HttpHeaders().set("Content-Type","application/json");
+    var headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.client.post<any>(this.url + "teacher/GradeStudent",
       data, { headers })
       .subscribe(res => {
@@ -47,7 +63,7 @@ export class TeacherViewgradesComponent {
     return this.client.get<Student[]>(this.url + "teacher/GetStudentList", { params })
       .subscribe(res => {
         this.students = res;
-        console.log(res);
+        console.log("Student" + this.students);
       }, err => console.error(err));
   }
 
@@ -73,7 +89,12 @@ interface Class {
 interface Student {
   StudentId: string,
   Name: string,
-  gpa: number
+}
+
+interface Grade {
+  StudentId: string,
+  CourseId: string,
+  Grade: number
 }
 
 

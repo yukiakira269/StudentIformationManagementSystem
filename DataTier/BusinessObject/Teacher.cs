@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 #nullable disable
 
-namespace SIMS.Models
+namespace SIMS.DataTier.BusinessObject
 {
     public partial class Teacher
     {

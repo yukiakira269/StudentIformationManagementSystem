@@ -1,4 +1,4 @@
-﻿using SIMS.Models;
+﻿using SIMS.DataTier.BusinessObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;

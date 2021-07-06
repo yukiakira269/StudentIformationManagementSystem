@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SIMS.DataTier.BusinessObject;
 using SIMS.DataTier.Infrastructure;
-using SIMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,7 @@ namespace SIMS.Controllers
     {
         ClassRepository classRepo = new ClassRepository();
         StudentRepository stuRepo = new StudentRepository();
+        GradeRepository gradeRepo = new GradeRepository();
 
         [HttpGet("GetClassList")]
         public IEnumerable<Class> GetClassList([FromQuery] string email)
@@ -32,16 +33,25 @@ namespace SIMS.Controllers
             return classRepo.GetStudentList(classId).ToList();
         }
 
+
+        [HttpGet("GetGrade")]
+        public IEnumerable<Grade> GetGrade([FromQuery] string id)
+        {
+            Console.WriteLine(id);
+            return gradeRepo.Find(id);
+        }
+
         [HttpPost("GradeStudent")]
         public void GradeStudent([FromBody] Object obj)
         {
             var data = JsonConvert.DeserializeObject<grade>(obj.ToString());
-            Console.WriteLine(data.Gpa);
+            Console.WriteLine(data.Grade);
+
         }
         class grade
         {
             public string Id { get; set; }
-            public string Gpa { get; set; }
+            public string Grade { get; set; }
         }
 
     }

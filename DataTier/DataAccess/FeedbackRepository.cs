@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SIMS.Models;
+using SIMS.DataTier.BusinessObject;
 using System;
 using System.Collections;
 using System.Collections.Generic;

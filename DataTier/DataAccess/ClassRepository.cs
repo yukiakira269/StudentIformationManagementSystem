@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SIMS.DataTier.BusinessObject;
 using SIMS.DataTier.DataAccess;
-using SIMS.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,11 +34,8 @@ namespace SIMS.DataTier.Infrastructure
             }
             foreach(Student s in students)
             {
-                Console.WriteLine("Hi");
+                Console.WriteLine(students.Count);
             }
-
-            Console.WriteLine(students.ToList());
-            Console.WriteLine("Done");
 
             return students;
 

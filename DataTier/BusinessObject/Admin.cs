@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SIMS.Models
+namespace SIMS.DataTier.BusinessObject
 {
     public partial class Admin
     {

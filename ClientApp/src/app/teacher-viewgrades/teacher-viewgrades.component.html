@@ -32,17 +32,35 @@
             </thead>
             <tbody *ngIf="students">
               <tr *ngFor="let student of students">
-                <td>{{  student.studentId }}</td>
-                <td>{{  student.name }}</td>
+                <td>{{ student.studentId }}</td>
+                <td>{{ student.name }}</td>
                 <td>
-                  <form #gradeForm ="ngForm" (ngSubmit)="gradeStudent(gradeForm.value)">
-                      <label for="gpa">
-                        GPA
-                      </label>
-                      <input  type="text" name="gpa" #gpa="ngModel" [(ngModel)]="student.gpa"/>
-                      <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="student.studentId" />
-                    <button class="btn btn-primary" type="submit">Save</button>
-                  </form>
+                  <button class="btn btn-primary"
+                          (click)="itemsVisibility2[i] = !itemsVisibility2[i]; getGrade(student.studentId)">
+                  View Grade
+                  </button>
+                </td>
+                <td>
+                  <table *ngIf="itemsVisibility2[i]">
+                    <thead>
+                      <tr>
+                        <th>CourseId</th>
+                        <th>Grade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let g of grades">
+                        <td>{{ g.courseId }}</td>
+                        <td>
+                          <form #gradeForm="ngForm" (ngSubmit)="gradeStudent(gradeForm.value)">
+                            <input type="text" name="grade" #grade="ngModel" [(ngModel)]="g.grade" />
+                            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="g.studentId" />
+                            <button class="btn btn-primary" type="submit">Save</button>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
               </tr>
             </tbody>

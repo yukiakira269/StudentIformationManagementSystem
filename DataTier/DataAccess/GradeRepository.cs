@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SIMS.Models;
+using SIMS.DataTier.BusinessObject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,9 +10,21 @@ namespace SIMS.DataTier.Infrastructure
 {
     public class GradeRepository : IRepository<Grade>
     {
+        private static SIMSContext ctx = new SIMSContext();
+
         public bool Delete(Grade entity, bool saveChanges = true)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Grade> Find(string id, string classId)
+        {
+            return ctx.Grades.Where(g => g.StudentId.Equals(id) && g.CourseId.Equals(classId)).ToList();
+        }
+
+        public IEnumerable<Grade> Find(string id)
+        {
+            return ctx.Grades.Where(g => g.StudentId.Equals(id)).ToList();
         }
 
         public Grade Find(params object[] values)

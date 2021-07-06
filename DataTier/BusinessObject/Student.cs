@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 #nullable disable
 
-namespace SIMS.Models
+namespace SIMS.DataTier.BusinessObject
 {
     public partial class Student
     {
@@ -24,9 +24,7 @@ namespace SIMS.Models
         public double? Gpa { get; set; }
 
         [JsonIgnore]
-        public virtual Parent Student1 { get; set; }
-        [JsonIgnore]
-        public virtual Grade StudentNavigation { get; set; }
+        public virtual Parent StudentNavigation { get; set; }
         [JsonIgnore]
         public virtual ICollection<ClassDetail> ClassDetails { get; set; }
         [JsonIgnore]
