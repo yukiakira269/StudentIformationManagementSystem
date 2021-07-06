@@ -10,8 +10,6 @@ namespace SIMS.DataTier.Infrastructure
 {
     public class GradeRepository : IRepository<Grade>
     {
-        private static SIMSContext ctx = new SIMSContext();
-
         public bool Delete(Grade entity, bool saveChanges = true)
         {
             throw new NotImplementedException();
@@ -19,11 +17,15 @@ namespace SIMS.DataTier.Infrastructure
 
         public IEnumerable<Grade> Find(string id, string classId)
         {
+            using var ctx = new SIMSContext();
+
             return ctx.Grades.Where(g => g.StudentId.Equals(id) && g.CourseId.Equals(classId)).ToList();
         }
 
         public IEnumerable<Grade> Find(string id)
         {
+            using var ctx = new SIMSContext();
+
             return ctx.Grades.Where(g => g.StudentId.Equals(id)).ToList();
         }
 
@@ -49,7 +51,20 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Update(Grade Entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ctx = new SIMSContext();
+                ctx.Grades.Update(Entity);
+                ctx.SaveChanges();
+                Console.WriteLine("Updated!!");
+            }
+            catch (Exception ex)
+            {
+                saveChanges = false;
+                throw new Exception(ex.Message);
+            }
+            return saveChanges;
+
         }
     }
 }

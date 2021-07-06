@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-teacher-viewgrades',
@@ -43,17 +43,16 @@ export class TeacherViewgradesComponent {
           this.grades = res;
           console.log("Grade" + res)
         },
-      err => console.error(err)
-    );
+        err => console.error(err),
+      );
   }
 
-  gradeStudent(f) {
-    var data = JSON.stringify(f);
+  gradeStudent(f: NgForm) {
+    var data = JSON.stringify(f.value);
     var headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.client.post<any>(this.url + "teacher/GradeStudent",
+    return this.client.post<Grade>(this.url + "teacher/GradeStudent",
       data, { headers })
       .subscribe(res => {
-        console.log(res);
       }, err => console.error(err));
   }
 
@@ -92,9 +91,9 @@ interface Student {
 }
 
 interface Grade {
-  StudentId: string,
-  CourseId: string,
-  Grade: number
+  studentId: string,
+  courseId: string,
+  grade: number
 }
 
 

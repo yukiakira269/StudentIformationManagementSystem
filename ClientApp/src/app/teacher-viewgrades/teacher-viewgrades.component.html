@@ -36,8 +36,9 @@
                 <td>{{ student.name }}</td>
                 <td>
                   <button class="btn btn-primary"
-                          (click)="itemsVisibility2[i] = !itemsVisibility2[i]; getGrade(student.studentId)">
-                  View Grade
+                          (click)="itemsVisibility2[i] = !itemsVisibility2[i];
+                          getGrade(student.studentId)">
+                    View Grade
                   </button>
                 </td>
                 <td>
@@ -52,15 +53,17 @@
                       <tr *ngFor="let g of grades">
                         <td>{{ g.courseId }}</td>
                         <td>
-                          <form #gradeForm="ngForm" (ngSubmit)="gradeStudent(gradeForm.value)">
-                            <input type="text" name="grade" #grade="ngModel" [(ngModel)]="g.grade" />
-                            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="g.studentId" />
+                          <form #gradeForm="ngForm" (ngSubmit)="gradeStudent(gradeForm)">
+                            <input type="text" name="grade1" #grade1="ngModel" [(ngModel)]="g.grade1" />
+                            <input type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="g.studentId" />
+                            <input type="hidden" name="courseId" #courseId="ngModel" [(ngModel)]="g.courseId" />
                             <button class="btn btn-primary" type="submit">Save</button>
                           </form>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+
                 </td>
               </tr>
             </tbody>

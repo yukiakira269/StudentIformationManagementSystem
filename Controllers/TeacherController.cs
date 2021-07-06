@@ -44,15 +44,12 @@ namespace SIMS.Controllers
         [HttpPost("GradeStudent")]
         public void GradeStudent([FromBody] Object obj)
         {
-            var data = JsonConvert.DeserializeObject<grade>(obj.ToString());
-            Console.WriteLine(data.Grade);
-
+            Console.WriteLine(obj.ToString());
+            var data = JsonConvert.DeserializeObject<Grade>(obj.ToString());
+            Console.WriteLine(data.ToString());
+            gradeRepo.Update(data);
         }
-        class grade
-        {
-            public string Id { get; set; }
-            public string Grade { get; set; }
-        }
+        
 
     }
 }
