@@ -14,7 +14,7 @@ namespace SIMS.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TeacherController : ControllerBase
+    public class TeacherController : Controller
     {
         ClassRepository classRepo = new ClassRepository();
         StudentRepository stuRepo = new StudentRepository();
@@ -42,12 +42,20 @@ namespace SIMS.Controllers
         }
 
         [HttpPost("GradeStudent")]
-        public void GradeStudent([FromBody] Object obj)
+        public IActionResult GradeStudent([FromBody] Object obj)
         {
-            Console.WriteLine(obj.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var data = JsonConvert.DeserializeObject<Grade>(obj.ToString());
-            Console.WriteLine(data.ToString());
+            if(data.Grade1 == null)
+            {
+                ModelState.AddModelError("grade", "Grades cannot be empty!");
+                return BadRequest(ModelState);
+            }
             gradeRepo.Update(data);
+            return Json(data);
         }
         
 

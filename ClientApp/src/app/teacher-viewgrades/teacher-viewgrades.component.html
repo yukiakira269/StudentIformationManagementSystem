@@ -1,7 +1,9 @@
 <app-teacher-nav></app-teacher-nav>
 
 <p *ngIf="!classes"><em>Loading.....</em></p>
-
+<div class="alert alert-success" role="alert" *ngIf="successGrade">
+  Student graded!
+</div>
 <div *ngIf="classes">
   <table class='table table-striped' aria-labelledby="tableLabel">
     <thead>
@@ -54,7 +56,17 @@
                         <td>{{ g.courseId }}</td>
                         <td>
                           <form #gradeForm="ngForm" (ngSubmit)="gradeStudent(gradeForm)">
-                            <input type="text" name="grade1" #grade1="ngModel" [(ngModel)]="g.grade1" />
+                            <input required min="0" max="10" class="form-control" type="number" name="grade1"
+                                   #grade1="ngModel" [(ngModel)]="g.grade1" />
+                            <div class="text-danger" *ngIf="grade1.errors?.required">
+                              Grade is required.
+                            </div>
+                            <div class="text-danger" *ngIf="grade1.errors?.min">
+                              Grade must be greater than 0.
+                            </div>
+                            <div class="text-danger" *ngIf="grade1.errors?.max">
+                              Grade must be less than or equal to 10.
+                            </div>
                             <input type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="g.studentId" />
                             <input type="hidden" name="courseId" #courseId="ngModel" [(ngModel)]="g.courseId" />
                             <button class="btn btn-primary" type="submit">Save</button>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, NgForm } from '@angular/forms';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teacher-viewgrades',
@@ -18,6 +19,8 @@ export class TeacherViewgradesComponent {
   client: HttpClient;
   url: string = "";
 
+  successGrade: boolean;
+  errors: string[];
 
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string,
@@ -48,12 +51,16 @@ export class TeacherViewgradesComponent {
   }
 
   gradeStudent(f: NgForm) {
+    this.successGrade = false;
     var data = JSON.stringify(f.value);
     var headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.client.post<Grade>(this.url + "teacher/GradeStudent",
       data, { headers })
       .subscribe(res => {
-      }, err => console.error(err));
+        this.successGrade = true;
+      }, err => {
+          console.log(err);
+      });
   }
 
   getStudentList(classId: string) {
