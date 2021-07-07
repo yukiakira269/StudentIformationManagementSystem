@@ -20,12 +20,13 @@ namespace SIMS.DataTier.Infrastructure
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Feedback> FindAll()
+        public IEnumerable<Feedback> FindAll(string teacherId)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            return ctx.Feedbacks.Where(f => f.TeacherId.Equals(teacherId)).ToList();
         }
 
-        public IEnumerable<Feedback> getAll()
+        public IEnumerable<Feedback> FindAll()
         {
             throw new NotImplementedException();
         }

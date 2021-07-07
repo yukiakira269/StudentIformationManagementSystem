@@ -1,0 +1,31 @@
+<app-teacher-nav></app-teacher-nav>
+
+
+<table mat-table [dataSource]="feedbacks" class="mat-elevation-z8">
+  <ng-container matColumnDef="studentId">
+    <th mat-header-cell *matHeaderCellDef> StudentId </th>
+    <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="feedback">
+    <th mat-header-cell *matHeaderCellDef> Feedback </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container>
+        <form>
+          <mat-form-field>
+            <input matInput placeholder="Feedback"
+                   value="{{ element.feedback1 }}" type="text" />
+          </mat-form-field>
+          <button mat-stroked-button>
+            Send
+          </button>
+        </form>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+

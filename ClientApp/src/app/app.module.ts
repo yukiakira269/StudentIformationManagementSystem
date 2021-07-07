@@ -6,7 +6,12 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -19,6 +24,8 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { TeacherNavComponent } from './teacher-nav/teacher-nav.component';
 import { TeacherViewclassesComponent } from './teacher-viewclasses/teacher-viewclasses.component';
 import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgrades.component';
+import { TeacherFeedbackComponent } from './teacher-feedback/teacher-feedback.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,7 @@ import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgra
     TeacherNavComponent,
     TeacherViewclassesComponent,
     TeacherViewgradesComponent,
+    TeacherFeedbackComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,6 +47,12 @@ import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgra
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -48,8 +62,10 @@ import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgra
       { path: 'home', component: HomeComponent },
       { path: 'teacher', component: TeacherComponent },
       { path: 'teacher/viewclass', component: TeacherViewclassesComponent },
-      { path: 'teacher/viewgrades', component: TeacherViewgradesComponent }
-    ])
+      { path: 'teacher/viewgrades', component: TeacherViewgradesComponent },
+      { path: 'teacher/feedbacks', component: TeacherFeedbackComponent }
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

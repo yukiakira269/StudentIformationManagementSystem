@@ -11,7 +11,7 @@ namespace SIMS.DataTier.DataAccess
         public static string GetIdFromMail(string mail)
         {
             //TO-DO
-            SIMSContext ctx = new SIMSContext();
+            using var ctx = new SIMSContext();
             try
             {
                 if (ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail)) != null)

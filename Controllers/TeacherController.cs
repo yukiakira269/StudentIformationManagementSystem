@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SIMS.DataTier.BusinessObject;
+using SIMS.DataTier.DataAccess;
 using SIMS.DataTier.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,18 @@ namespace SIMS.Controllers
     public class TeacherController : Controller
     {
         ClassRepository classRepo = new ClassRepository();
-        StudentRepository stuRepo = new StudentRepository();
         GradeRepository gradeRepo = new GradeRepository();
+        FeedbackRepository feedbackRepo = new FeedbackRepository();
+
+
+        [HttpGet("GetFeedbacks")]
+        public IEnumerable<Feedback> GetFeedbacks([FromQuery] string email)
+        {
+            var id = UserRepository.GetIdFromMail(email);
+            Console.WriteLine(id);
+            return feedbackRepo.FindAll(id);
+        }
+
 
         [HttpGet("GetClassList")]
         public IEnumerable<Class> GetClassList([FromQuery] string email)
@@ -49,7 +60,7 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<Grade>(obj.ToString());
-            if(data.Grade1 == null)
+            if (data.Grade1 == null)
             {
                 ModelState.AddModelError("grade", "Grades cannot be empty!");
                 return BadRequest(ModelState);
@@ -57,7 +68,7 @@ namespace SIMS.Controllers
             gradeRepo.Update(data);
             return Json(data);
         }
-        
+
 
     }
 }

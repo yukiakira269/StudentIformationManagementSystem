@@ -11,7 +11,6 @@ namespace SIMS.DataTier.Infrastructure
     //T must be a ref value
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> getAll();
         T Find(params object[] values);
         IEnumerable<T> FindAll();
         bool Insert(T entity, bool saveChanges = true);
