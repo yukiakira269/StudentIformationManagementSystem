@@ -1,5 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 
 
@@ -14,6 +15,9 @@ export class TeacherFeedbackComponent implements OnInit {
   private client: HttpClient;
   feedbacks: Feedback[];
   baseUrl: string;
+  feedbackSuccess: boolean;
+  errorMsg: string;
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl) {
     this.client = http;
     this.baseUrl = baseUrl;
@@ -31,18 +35,28 @@ export class TeacherFeedbackComponent implements OnInit {
         error => console.error(error)
       );
   }
-}
 
+  feedbackStudent(f: NgForm) {
+    this.feedbackSuccess = false;
+    var data = JSON.stringify(f.value);
+    var headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.client.post<Feedback>(this.baseUrl + "teacher/Feedback",
+      data, { headers })
+      .subscribe(res => {
+        this.feedbackSuccess = true
+      }, err => {
+        this.errorMsg = "Feedback unsuccessful";
+        console.error(err);
+      });
+  }
+
+
+}
 
 export interface Feedback {
+  teacherId: string;
   studentId: string;
-  feedback: string;
+  feedback1: string;
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 

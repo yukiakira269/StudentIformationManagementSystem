@@ -1,22 +1,31 @@
 <app-teacher-nav></app-teacher-nav>
 
 
+<div class="alert alert-success" role="alert" *ngIf="feedbackSuccess">
+  Feedback was successful
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+  {{ errorMsg }}
+</div>
+
 <table mat-table [dataSource]="feedbacks" class="mat-elevation-z8">
   <ng-container matColumnDef="studentId">
     <th mat-header-cell *matHeaderCellDef> StudentId </th>
     <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
   </ng-container>
-
   <ng-container matColumnDef="feedback">
     <th mat-header-cell *matHeaderCellDef> Feedback </th>
     <td mat-cell *matCellDef="let element">
       <ng-container>
-        <form>
+        <form #feedbackForm="ngForm" (ngSubmit)="feedbackStudent(feedbackForm)">
           <mat-form-field>
-            <input matInput placeholder="Feedback"
-                   value="{{ element.feedback1 }}" type="text" />
+            <input [(ngModel)]="element.teacherId" name="teacherId" type="hidden"/>
+            <input [(ngModel)]="element.studentId" name="studentId" type="hidden"/>
+            <input matInput required
+                   [(ngModel)]="element.feedback1" name="feedback1" type="text" />
           </mat-form-field>
-          <button mat-stroked-button>
+          <button mat-stroked-button class="btn btn-outline-primary" type="submit">
             Send
           </button>
         </form>

@@ -38,7 +38,19 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Update(Feedback Entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ctx = new SIMSContext();
+                ctx.Feedbacks.Update(Entity);
+                ctx.SaveChanges();
+                Console.WriteLine("Updated!!");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return saveChanges;
+
         }
     }
 }

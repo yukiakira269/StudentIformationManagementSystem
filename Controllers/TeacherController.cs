@@ -22,6 +22,24 @@ namespace SIMS.Controllers
         FeedbackRepository feedbackRepo = new FeedbackRepository();
 
 
+        [HttpPost("Feedback")]
+        public IActionResult FeedbackStudent([FromBody] object obj)
+        {
+            Console.WriteLine(obj.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Feedback>(obj.ToString());
+            if (data.Feedback1 == null || data.Feedback1.Length == 0)
+            {
+                ModelState.AddModelError("Feedback", "Feedbacks cannot be empty!");
+                return BadRequest(ModelState);
+            }
+            feedbackRepo.Update(data);
+            return Json(data);
+        }
+
         [HttpGet("GetFeedbacks")]
         public IEnumerable<Feedback> GetFeedbacks([FromQuery] string email)
         {
