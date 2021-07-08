@@ -5,6 +5,7 @@
 
 <!-- User NOT logged in -->
 <ng-template #guest>
+  <app-guest-nav></app-guest-nav>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <h3>Howdy, GUEST</h3>
   <p>Login to get started...</p>
@@ -21,7 +22,7 @@
     <app-teacher-nav></app-teacher-nav>
   </div>
   <div *ngIf="student">
-
+    <app-student-nav></app-student-nav>
   </div>
   <div *ngIf="admin">
 

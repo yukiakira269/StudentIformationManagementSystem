@@ -19,13 +19,19 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { GuestNavComponent } from './guest-nav/guest-nav.component';
+
 import { TeacherComponent } from './teacher/teacher.component';
 import { TeacherNavComponent } from './teacher-nav/teacher-nav.component';
 import { TeacherViewclassesComponent } from './teacher-viewclasses/teacher-viewclasses.component';
 import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgrades.component';
 import { TeacherFeedbackComponent } from './teacher-feedback/teacher-feedback.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { StudentComponent } from './student/student.component';
+import { StudentNavComponent } from './student-nav/student-nav.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +41,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CounterComponent,
     FetchDataComponent,
     UserProfileComponent,
+    GuestNavComponent,
     TeacherComponent,
     TeacherNavComponent,
     TeacherViewclassesComponent,
     TeacherViewgradesComponent,
     TeacherFeedbackComponent,
+    StudentComponent,
+    StudentNavComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -63,7 +72,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'teacher', component: TeacherComponent },
       { path: 'teacher/viewclass', component: TeacherViewclassesComponent },
       { path: 'teacher/viewgrades', component: TeacherViewgradesComponent },
-      { path: 'teacher/feedbacks', component: TeacherFeedbackComponent }
+      { path: 'teacher/feedbacks', component: TeacherFeedbackComponent },
+      { path: 'student', component: StudentComponent }
     ]),
     BrowserAnimationsModule
   ],
