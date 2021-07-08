@@ -83,6 +83,11 @@ namespace SIMS.Controllers
                 ModelState.AddModelError("grade", "Grades cannot be empty!");
                 return BadRequest(ModelState);
             }
+            if(data.Grade1 < 0 || data.Grade1 > 10)
+            {
+                ModelState.AddModelError("grade", "Grades must be between 0 and 10!");
+                return BadRequest(ModelState);
+            }
             gradeRepo.Update(data);
             return Json(data);
         }

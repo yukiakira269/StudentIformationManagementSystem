@@ -19,7 +19,7 @@ export class TeacherViewgradesComponent {
   client: HttpClient;
   url: string = "";
 
-  successGrade: boolean;
+  gradeStatus: string;
   errors: string[];
 
   constructor(http: HttpClient,
@@ -38,6 +38,7 @@ export class TeacherViewgradesComponent {
   }
 
   getGrade(studentId: string) {
+    this.gradeStatus = null;
     let params = new HttpParams()
       .append('id', studentId);
     return this.client.get<Grade[]>(this.url + "teacher/GetGrade", { params })
@@ -51,19 +52,20 @@ export class TeacherViewgradesComponent {
   }
 
   gradeStudent(f: NgForm) {
-    this.successGrade = false;
     var data = JSON.stringify(f.value);
     var headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.client.post<Grade>(this.url + "teacher/GradeStudent",
       data, { headers })
       .subscribe(res => {
-        this.successGrade = true;
+        this.gradeStatus = "Student graded!"
       }, err => {
-          console.log(err);
+        this.gradeStatus = "Grading failed! Please try again!"
+        console.error(err);
       });
   }
 
   getStudentList(classId: string) {
+    this.gradeStatus = null;
     let params = new HttpParams()
       .append('classId', classId);
     return this.client.get<Student[]>(this.url + "teacher/GetStudentList", { params })

@@ -65,10 +65,8 @@ import { StudentNavComponent } from './student-nav/student-nav.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: UserProfileComponent, pathMatch: 'full' },   
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'home', component: HomeComponent },
+      { path: '', component: UserProfileComponent, pathMatch: 'full' },
+      { path: 'home', component: UserProfileComponent },
       { path: 'teacher', component: TeacherComponent },
       { path: 'teacher/viewclass', component: TeacherViewclassesComponent },
       { path: 'teacher/viewgrades', component: TeacherViewgradesComponent },
