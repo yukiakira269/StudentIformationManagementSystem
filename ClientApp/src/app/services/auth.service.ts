@@ -44,11 +44,8 @@ export class AuthService {
   }
 
   async googleSignin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters
-      ({
-        'Prompt' : 'Please select an account'
-      });
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     const credential = await this.afAuth.signInWithPopup(provider);
     return this.updateUserData(credential.user);
   }
