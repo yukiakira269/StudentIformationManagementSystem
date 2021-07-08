@@ -22,10 +22,11 @@ namespace SIMS.DataTier.DataAccess
                 {
                     return ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail)).TeacherId;
                 }
-                else
+                else if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
                     return ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)).StudentId;
                 }
+
             }
             catch (Exception ex)
             {

@@ -16,11 +16,11 @@ namespace SIMS.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public string SetRole([FromBody] string mail)
+        public string SetRole([FromBody] object obj)
         {
             using SIMSContext ctx = new SIMSContext();
-
-            string id = UserRepository.GetIdFromMail(mail);
+            string mail = obj.ToString();
+            string id = UserRepository.GetIdFromMail(mail.ToString());
             //No ID found
             if (id == null)
             {
@@ -30,6 +30,13 @@ namespace SIMS.Controllers
                 {
                     try
                     {
+                        ctx.Parents.Add(new Parent
+                        {
+                            StudentId = mail,
+                            Balance = null,
+                            Email = "",
+                            Phone = null,
+                        });
                         ctx.Students.Add(new Student
                         {
                             StudentId = mail,
@@ -38,10 +45,10 @@ namespace SIMS.Controllers
                             Address = "",
                             Avatar = "",
                             Dob = null,
-                            Feedbacks = null,
                             Gpa = null,
                             ParentsPhone = null,
                         });
+                        
                         ctx.SaveChanges();
                         return JsonConvert.SerializeObject("N");
                     }
