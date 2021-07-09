@@ -10,9 +10,38 @@ namespace SIMS.DataTier.Infrastructure
 {
     public class TeacherRepository : IRepository<Teacher>
     {
+
+        public string GenerateId()
+        {
+            using var ctx = new SIMSContext();
+            var lastId = ctx.Teachers.OrderByDescending(t => t.TeacherId).First().TeacherId;
+            var lastDigits = Int32.Parse(lastId.Substring(2, lastId.Length - 2)) + 1;
+            return "TE" + lastDigits.ToString();
+        }
+
+        public void Promote(Student student)
+        {
+            //Remove the Student from the student list
+            StudentRepository stuRepo = new StudentRepository();
+            stuRepo.Delete(student);
+            //Generate a new Teacher ID
+            string id = GenerateId();
+            //Add a new teacher with relevant information
+            Teacher teacher = new Teacher
+            {
+                TeacherId = id,
+                Name = student.Name,
+                Email = student.Email,
+            };
+            this.Insert(teacher);
+        }
+
         public bool Delete(Teacher entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            ctx.Teachers.Remove(entity);
+            ctx.SaveChanges();
+            return saveChanges;
         }
 
         public Teacher Find(params object[] values)
@@ -22,7 +51,8 @@ namespace SIMS.DataTier.Infrastructure
 
         public IEnumerable<Teacher> FindAll()
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            return ctx.Teachers.ToList();
         }
 
         public IEnumerable<Teacher> getAll()
@@ -32,12 +62,26 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Insert(Teacher entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            ctx.Teachers.Add(entity);
+            ctx.SaveChanges();
+            return saveChanges;
         }
 
         public bool Update(Teacher Entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ctx = new SIMSContext();
+                ctx.Teachers.Update(Entity);
+                ctx.SaveChanges();
+                Console.WriteLine("Updated!!");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return saveChanges;
         }
     }
 }

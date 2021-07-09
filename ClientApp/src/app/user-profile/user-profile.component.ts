@@ -8,10 +8,11 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  teacher: boolean = false;
-  student: boolean = false;
-  admin: boolean = false;
-  unauth: boolean = false;
+  teacher: boolean;
+  student: boolean;
+  admin: boolean;
+  unauth: boolean;
+  isLoaded: boolean;
 
   client: HttpClient;
   baseUrl: string;
@@ -24,14 +25,22 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRole();
+  }
+
+  getRole() {
+    console.log(localStorage.getItem("USER_MAIL"));
     var data = JSON.stringify(localStorage.getItem("USER_MAIL"));
+    console.log(data);
     var headers = new HttpHeaders().set("Content-type", "application/json");
-    this.client.post<string>(this.baseUrl + "user", data, { headers })
+    return this.client.post<string>(this.baseUrl + "user", data, { headers })
       .subscribe(res => {
+        console.log("Role is" + res);
         if (res.includes("ST")) this.student = true;
         else if (res.includes("TE")) this.teacher = true;
         else if (res.includes("AD")) this.admin = true;
         else this.unauth = true;
+        this.isLoaded = true;
       }, err => console.error(err));
   }
 

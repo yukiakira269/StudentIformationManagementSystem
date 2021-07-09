@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 #nullable disable
@@ -13,7 +14,6 @@ namespace SIMS.DataTier.BusinessObject
             ClassDetails = new HashSet<ClassDetail>();
             Feedbacks = new HashSet<Feedback>();
         }
-
         public string StudentId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

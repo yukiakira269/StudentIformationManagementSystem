@@ -1,0 +1,62 @@
+
+<app-admin-nav></app-admin-nav>
+
+<div *ngIf="!teachers">
+  <h4 class="alert alert-warning">Loading...</h4>
+</div>
+
+<div *ngIf="updateSuccess">
+  <h4 class="alert alert-success">Updated succesfully!</h4>
+</div>
+<div *ngIf="teachers">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Information</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of teachers; let i = index">
+        <td> {{ i + 1 }}</td>
+        <td>
+          <form #updateForm="ngForm" (ngSubmit)="updateTeacher(updateForm)">
+            <label for="teacherId">TeacherId</label>
+            <input disabled class="form-control" type="text" name="teacherId"
+                   value="{{ m.teacherId }}" />
+            <input type="hidden" class="form-control" name="teacherId"
+                   #teacherId="ngModel" [(ngModel)]="m.teacherId" />
+            <div class="text-danger" *ngIf="teacherId.errors?.required">
+              Id is required.
+            </div>
+            <label for="name">Name</label>
+            <input required class="form-control" type="text" name="name"
+                   #name="ngModel" [(ngModel)]="m.name" />
+            <div class="text-danger" *ngIf="name.errors?.required">
+              Name is required.
+            </div>
+            <label for="email">Email</label>
+            <input disabled class="form-control" type="text" name="email"
+                   value="{{ m.email }}" />
+            <input class="form-control" type="hidden" name="email"
+                   #email="ngModel" [(ngModel)]="m.email" />
+            <label for="phone">Phone</label>
+            <input required class="form-control" type="text" name="phone"
+                   #phone="ngModel" [(ngModel)]="m.phone" />
+            <div class="text-danger" *ngIf="phone.errors?.required">
+              Phone number is required.
+            </div>
+            <label for="phone">Faculty</label>
+            <input required class="form-control" type="text" name="faculty"
+                   #faculty="ngModel" [(ngModel)]="m.faculty" />
+            <div class="text-danger" *ngIf="phone.errors?.required">
+              Phone number is required.
+            </div>
+            <button id="save" class="btn btn-primary" type="submit">Save</button>
+            <button id="remove" class="btn btn-outline-danger" type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

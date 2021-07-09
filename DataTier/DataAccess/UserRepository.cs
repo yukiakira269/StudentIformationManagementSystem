@@ -1,6 +1,7 @@
 ﻿using SIMS.DataTier.BusinessObject;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,17 +17,19 @@ namespace SIMS.DataTier.DataAccess
             {
                 if (ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
+                    Debug.WriteLine("Admin");
                     return ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail)).AdminId;
                 }
                 else if (ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
+                    Debug.WriteLine("Teacher");
                     return ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail)).TeacherId;
                 }
                 else if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
+                    Debug.WriteLine("Student");
                     return ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)).StudentId;
                 }
-
             }
             catch (Exception ex)
             {

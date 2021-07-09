@@ -1,0 +1,99 @@
+
+<app-admin-nav></app-admin-nav>
+
+<div *ngIf="!students">
+  <h4 class="alert alert-warning">Loading...</h4>
+</div>
+
+<div *ngIf="updateSuccess">
+  <h4 class="alert alert-success">Updated succesfully!</h4>
+</div>
+<div *ngIf="students">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Information</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of students; let i = index">
+        <td> {{ i + 1 }}</td>
+        <td>
+          <form *ngIf="m.studentId.includes('@')"
+                #updateForm="ngForm" (ngSubmit)="authorise(updateForm)">
+            <label for="studentId">StudentId</label>
+            <input disabled
+                   class="form-control" type="text" name="studentId"
+                   value="{{ m.studentId }}" />
+            <input type="hidden" class="form-control" name="studentId"
+                   #studentId="ngModel" [(ngModel)]="m.studentId" />
+            <div class="text-danger" *ngIf="studentId.errors?.required">
+              Id is required.
+            </div>
+            <label for="name">Name</label>
+            <input required class="form-control" type="text" name="name"
+                   #name="ngModel" [(ngModel)]="m.name" />
+            <div class="text-danger" *ngIf="name.errors?.required">
+              Name is required.
+            </div>
+            <label for="address">Address</label>
+            <input required class="form-control" type="text" name="address"
+                   #address="ngModel" [(ngModel)]="m.address" />
+            <div class="text-danger" *ngIf="address.errors?.required">
+              Address is required.
+            </div>
+            <label for="email">Phone</label>
+            <input disabled class="form-control" type="text" name="email"
+                   value="{{ m.email }}" />
+            <input class="form-control" type="hidden" name="email"
+                   #email="ngModel" [(ngModel)]="m.email" />
+            <div class="text-danger" *ngIf="email.errors?.required">
+              Phone Number is required.
+            </div>
+            <button class="btn btn-primary" type="submit">Athorise</button>
+          </form>
+
+
+
+          <form *ngIf="!m.studentId.includes('@')"
+                #updateForm="ngForm" (ngSubmit)="updateStudent(updateForm)">
+            <label for="studentId">StudentId</label>
+            <input disabled
+                   class="form-control" type="text" name="studentId"
+                   value="{{ m.studentId }}" />
+            <input type="hidden" class="form-control" name="studentId"
+                   #studentId="ngModel" [(ngModel)]="m.studentId" />
+            <div class="text-danger" *ngIf="studentId.errors?.required">
+              Id is required.
+            </div>
+            <label for="name">Name</label>
+            <input required class="form-control" type="text" name="name"
+                   #name="ngModel" [(ngModel)]="m.name" />
+            <div class="text-danger" *ngIf="name.errors?.required">
+              Name is required.
+            </div>
+            <label for="address">Address</label>
+            <input required class="form-control" type="text" name="address"
+                   #address="ngModel" [(ngModel)]="m.address" />
+            <div class="text-danger" *ngIf="address.errors?.required">
+              Address is required.
+            </div>
+            <label for="email">Phone</label>
+            <input disabled class="form-control" type="text" name="email"
+                   value="{{ m.email }}" />
+            <input class="form-control" type="hidden" name="email"
+                   #email="ngModel" [(ngModel)]="m.email" />
+            <div class="text-danger" *ngIf="email.errors?.required">
+              Phone Number is required.
+            </div>
+            <button id="save" class="btn btn-outline-primary" type="submit">Save</button>
+            <button id="promote" class="btn btn-outline-success" type="submit">Promote to a Teacher</button>
+            <button id="remove" class="btn btn-outline-danger" type="submit">Remove</button>
+
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

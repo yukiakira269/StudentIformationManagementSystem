@@ -1,0 +1,107 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SIMS.DataTier.BusinessObject;
+using SIMS.DataTier.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SIMS.Controllers
+{
+    [Route("[controller]")]
+    [ApiController]
+    public class AdminController : Controller
+    {
+        StudentRepository stuRepo = new StudentRepository();
+        TeacherRepository teacherRepo = new TeacherRepository();
+        [HttpPost("RemoveTeacher")]
+        public IActionResult RemoveTeacher([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Teacher>(obj.ToString());
+            teacherRepo.Delete(data);
+            return Json(data);
+        }
+
+
+        [HttpPost("UpdateTeacher")]
+        public IActionResult UpdateTeacher([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Teacher>(obj.ToString());
+            teacherRepo.Update(data);
+            return Json(data);
+        }
+
+
+        [HttpPost("RemoveStudent")]
+        public IActionResult RemoveStudent([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Student>(obj.ToString());
+            stuRepo.Delete(data);
+            return Json(data);
+        }
+
+        [HttpPost("PromoteStudent")]
+        public IActionResult PromoteStudent([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Student>(obj.ToString());
+            teacherRepo.Promote(data);
+            return Json(data);
+        }
+
+
+        [HttpPost("AuthoriseStudent")]
+        public IActionResult AuthoriseStudent([FromBody] object obj)
+        {
+            Console.WriteLine(obj.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Student>(obj.ToString());
+            stuRepo.Authorise(data);
+            return Json(data);
+        }
+
+        [HttpPost("UpdateStudent")]
+        public IActionResult UpdateStudent([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Student>(obj.ToString());
+            stuRepo.Update(data);
+            return Json(data);
+        }
+
+        [HttpGet("GetStudents")]
+        public IEnumerable<Student> GetStudents()
+        {
+            return stuRepo.FindAll();
+        }
+
+        [HttpGet("GetTeachers")]
+        public IEnumerable<Teacher> GetTeachers()
+        {
+            return teacherRepo.FindAll();
+        }
+    }
+}

@@ -23,6 +23,7 @@ namespace SIMS.Controllers
 
 
         [HttpPost("Feedback")]
+        [AutoValidateAntiforgeryToken]
         public IActionResult FeedbackStudent([FromBody] object obj)
         {
             Console.WriteLine(obj.ToString());
@@ -31,11 +32,6 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<Feedback>(obj.ToString());
-            if (data.Feedback1 == null || data.Feedback1.Length == 0)
-            {
-                ModelState.AddModelError("Feedback", "Feedbacks cannot be empty!");
-                return BadRequest(ModelState);
-            }
             feedbackRepo.Update(data);
             return Json(data);
         }
@@ -71,6 +67,7 @@ namespace SIMS.Controllers
         }
 
         [HttpPost("GradeStudent")]
+        [AutoValidateAntiforgeryToken]
         public IActionResult GradeStudent([FromBody] Object obj)
         {
             if (!ModelState.IsValid)

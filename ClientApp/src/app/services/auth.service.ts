@@ -33,7 +33,9 @@ export class AuthService {
           //Sync with back-end
           localStorage.setItem("USER_MAIL", user.email);
           this.setMail(JSON.stringify(localStorage.getItem("USER_MAIL")))
-            .subscribe(mail => console.log(mail));
+            .subscribe(mail => {
+              console.log("mail" + mail)
+            });
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
@@ -50,7 +52,7 @@ export class AuthService {
     return this.updateUserData(credential.user);
   }
 
-  private updateUserData(user) {
+  private async updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data = {
@@ -59,11 +61,15 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL
     }
-    return userRef.set(data, { merge: true })
+
+    location.reload();
+    userRef.set(data, { merge: true })
   }
   async signOut() {
+    localStorage.clear();
     await this.afAuth.signOut();
-    this.router.navigate(['/']);
+    await this.router.navigate(['/']);
+    return location.reload();
   }
 
   setMail(mail: string): Observable<any> {

@@ -58,7 +58,7 @@ namespace SIMS.Controllers
                     }
                 }
                 //Awaiting authorisation
-                else if (stu != null && stu.Email.Contains("@"))
+                else if (stu != null && stu.StudentId.Contains("@"))
                 {
                     return JsonConvert.SerializeObject("N");
                 }
@@ -70,7 +70,6 @@ namespace SIMS.Controllers
             else
             {
                 return JsonConvert.SerializeObject(id.Substring(0, 2));
-             
             }
 
 

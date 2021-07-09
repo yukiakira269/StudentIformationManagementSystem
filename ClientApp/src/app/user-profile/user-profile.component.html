@@ -1,5 +1,6 @@
-
-<div *ngIf="auth.user$ | async; then authenticated else guest">
+<div *ngIf="auth.user$ | async as user;
+     then authenticated
+     else guest ">
 </div>
 
 <!-- User NOT logged in -->
@@ -17,26 +18,32 @@
 
 <!-- User logged in -->
 <ng-template #authenticated>
-  <div *ngIf="teacher">
-    <app-teacher-nav></app-teacher-nav>
-  </div>
-  <div *ngIf="student">
-    <app-student-nav></app-student-nav>
-  </div>
-  <div *ngIf="admin">
-
-  </div>
   <div *ngIf="auth.user$ | async as user">
-    <div *ngIf="!unauth">
-      <h3>Howdy, {{ user.displayName }}</h3>
-      <img [src]="user.photoURL">
-      <p>UID: {{ user.uid }}</p>
-      <button (click)="auth.signOut()">Logout</button>
+    <div *ngIf="!isLoaded">
+      Loading...
     </div>
-    <div *ngIf="unauth">
-      <h1 class="text-danger">
-      This account has not been authorised! Please contact an administrator for further assistance
-      </h1>
+    <div *ngIf="isLoaded">
+      <div *ngIf="teacher">
+        <app-teacher-nav></app-teacher-nav>
+      </div>
+      <div *ngIf="student">
+        <app-student-nav></app-student-nav>
+      </div>
+      <div *ngIf="admin">
+        <app-admin-nav></app-admin-nav>
+      </div>
+      <div *ngIf="!unauth">
+        <h3>Howdy, {{ user.displayName }}</h3>
+        <img [src]="user.photoURL">
+        <p>UID: {{ user.uid }}</p>
+        <button (click)="auth.signOut()">Logout</button>
+      </div>
+      <div *ngIf="unauth">
+        <h1 class="text-danger">
+          This account has not been authorised! Please contact an administrator for further assistance
+          <button (click)="auth.signOut()">Logout</button>
+        </h1>
+      </div>
     </div>
   </div>
 </ng-template>
