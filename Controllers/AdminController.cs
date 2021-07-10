@@ -28,8 +28,10 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<Class>(obj.ToString());
-            Debug.WriteLine(data);
-            classRepo.Delete(data);
+            if (data.CourseId.Length > 0)
+            {
+                classRepo.Delete(data);
+            }
             return Json(data);
         }
 
@@ -43,7 +45,7 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<List<Class>>(obj.ToString());
-            data.ForEach(c => Console.WriteLine(c.CourseId));
+            Console.WriteLine(data);
             classRepo.UpdateList(data);
             return Json(data);
         }
@@ -57,8 +59,10 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<Course>(obj.ToString());
-            Debug.WriteLine(data);
-            courseRepo.Delete(data);
+            if (data.CourseId.Length > 0)
+            {
+                courseRepo.Delete(data);
+            }
             return Json(data);
         }
 
@@ -72,7 +76,7 @@ namespace SIMS.Controllers
                 return BadRequest(ModelState);
             }
             var data = JsonConvert.DeserializeObject<List<Course>>(obj.ToString());
-            data.ForEach(c => Console.WriteLine(c.CourseId));
+
             courseRepo.UpdateList(data);
             return Json(data);
         }

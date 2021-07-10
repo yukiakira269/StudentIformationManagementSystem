@@ -51,8 +51,7 @@ namespace SIMS.DataTier.Infrastructure
             foreach (Course course in Entities)
             {
                 //Load to memory for performance improvement
-                var courseList = ctx.Courses.ToList();
-                var toBeAdded = courseList.SingleOrDefault(c => c.CourseId.Equals(course.CourseId));
+                var toBeAdded = ctx.Courses.AsNoTracking<Course>().SingleOrDefault(c => c.CourseId.Equals(course.CourseId));
                 //The course is not on the list
                 if (toBeAdded == null)
                 {
@@ -61,8 +60,8 @@ namespace SIMS.DataTier.Infrastructure
                 //The course is on the list
                 else if (toBeAdded != null)
                 {
-                    var toBeUpdated = toBeAdded;
-                    ctx.Update(toBeUpdated);
+                    var toBeUpdated = course;
+                    ctx.Courses.Update(toBeUpdated);
                 }
             }
             ctx.SaveChanges();

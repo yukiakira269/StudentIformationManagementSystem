@@ -14,6 +14,7 @@ export class AdminCoursesComponent implements OnInit {
   courses: Course[];
   courseForm: FormGroup;
   errMsg: string;
+  isLoaded: boolean;
 
   constructor(
     http: HttpClient,
@@ -76,6 +77,7 @@ export class AdminCoursesComponent implements OnInit {
   }
 
   getCourses() {
+    this.isLoaded = false;
     this.client.get<Course[]>(this.baseUrl + ("course/GetCourses"))
       .subscribe(
         res => {
@@ -87,6 +89,7 @@ export class AdminCoursesComponent implements OnInit {
               fee: c.fee
             }))
           )
+          this.isLoaded = true;
           console.log(res);
         },
         err => console.error(err)
