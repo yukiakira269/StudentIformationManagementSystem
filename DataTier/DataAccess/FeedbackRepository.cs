@@ -23,8 +23,51 @@ namespace SIMS.DataTier.Infrastructure
         public IEnumerable<Feedback> FindAll(string teacherId)
         {
             using var ctx = new SIMSContext();
-            return ctx.Feedbacks.Where(f => f.TeacherId.Equals(teacherId)).ToList();
+
+            //Get teaching classes
+            var teachingClasses = ctx.Classes.Where(c => c.TeacherId.Equals(teacherId)).ToList();
+
+            //Get students from teaching classes
+            var studentsFromTeachingClasses = new List<Student>();
+            foreach(var c in teachingClasses)
+            {
+                var stuDet = ctx.ClassDetails.Where(det => det.ClassId.Equals(c.ClassId)).ToList();
+                //For each detail, get the student
+                foreach(var d in stuDet)
+                {
+                    studentsFromTeachingClasses.Add(ctx.Students.SingleOrDefault(s => s.StudentId.Equals(d.StudentId)));
+                }
+            }
+
+            //Get feedbacks of all teaching students
+            var feedbackList = new List<Feedback>();
+            foreach(var stu in studentsFromTeachingClasses)
+            {
+                var feedback = ctx.Feedbacks.SingleOrDefault(f => f.StudentId.Equals(stu.StudentId));
+                //There is already a feedback
+                if(feedback != null)
+                {
+                    feedbackList.Add(feedback);
+                }
+                //There is no feedback yet, create an empty feedback
+                else
+                {
+                    var newFeedback = new Feedback
+                    {
+                        Feedback1 = "",
+                        StudentId = stu.StudentId,
+                        TeacherId = teacherId
+                    };
+                    feedbackList.Add(newFeedback);
+                    //Also sync with the database
+                    ctx.Feedbacks.Add(newFeedback);
+                    ctx.SaveChanges();
+                }
+            }
+            return feedbackList;
+            //return ctx.Feedbacks.Where(f => f.TeacherId.Equals(teacherId)).ToList();
         }
+
 
         public IEnumerable<Feedback> FindAll()
         {

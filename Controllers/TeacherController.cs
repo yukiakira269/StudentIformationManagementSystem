@@ -23,7 +23,6 @@ namespace SIMS.Controllers
 
 
         [HttpPost("Feedback")]
-        [AutoValidateAntiforgeryToken]
         public IActionResult FeedbackStudent([FromBody] object obj)
         {
             Console.WriteLine(obj.ToString());
@@ -40,7 +39,6 @@ namespace SIMS.Controllers
         public IEnumerable<Feedback> GetFeedbacks([FromQuery] string email)
         {
             var id = UserRepository.GetIdFromMail(email);
-            Console.WriteLine(id);
             return feedbackRepo.FindAll(id);
         }
 
@@ -67,7 +65,6 @@ namespace SIMS.Controllers
         }
 
         [HttpPost("GradeStudent")]
-        [AutoValidateAntiforgeryToken]
         public IActionResult GradeStudent([FromBody] Object obj)
         {
             if (!ModelState.IsValid)
