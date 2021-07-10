@@ -90,6 +90,16 @@ export class TeacherViewgradesComponent {
     }
   }
 
+  closeAllButThis2(index: number) {
+    console.log(index);
+    this.itemsVisibility2[index] = true;
+    for (let i = 0; i < this.itemsVisibility2.length; i++) {
+      if (i !== index) {
+        this.itemsVisibility2[i] = false;
+      }
+    }
+  }
+
 }
 
 

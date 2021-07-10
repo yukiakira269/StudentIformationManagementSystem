@@ -53,8 +53,8 @@ export class AdminCoursesComponent implements OnInit {
 
   addCourse() {
     const course = this.fb.group({
-      courseId: ['', Validators.required],
-      name: ['', Validators.required],
+      courseId: ['', Validators.required, Validators.minLength(6), Validators.maxLength(6)],
+      name: ['', Validators.required, Validators.maxLength(30)],
       fee: ['', Validators.required]
     })
     this.coursesForm.push(course);

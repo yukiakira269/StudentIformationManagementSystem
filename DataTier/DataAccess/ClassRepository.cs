@@ -32,7 +32,7 @@ namespace SIMS.DataTier.Infrastructure
                     students.Add(tempStu);
                 }
             }
-            foreach(Student s in students)
+            foreach (Student s in students)
             {
                 Console.WriteLine(students.Count);
             }
@@ -44,7 +44,10 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Delete(Class entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            ctx.Classes.Remove(entity);
+            ctx.SaveChanges();
+            return saveChanges;
         }
 
         public Class Find(params object[] values)
@@ -81,6 +84,30 @@ namespace SIMS.DataTier.Infrastructure
         public bool Update(Class Entity, bool saveChanges = true)
         {
             throw new NotImplementedException();
+        }
+
+        public bool UpdateList(IEnumerable<Class> Entities, bool saveChanges = true)
+        {
+            using var ctx = new SIMSContext();
+            foreach (Class cl in Entities)
+            {
+                //Load to memory for performance improvement
+                var classList = ctx.Classes.ToList();
+                var toBeAdded = classList.SingleOrDefault(c => c.CourseId.Equals(cl.CourseId));
+                //The course is not on the list
+                if (toBeAdded == null)
+                {
+                    ctx.Classes.Add(cl);
+                }
+                //The course is on the list
+                else if (toBeAdded != null)
+                {
+                    var toBeUpdated = toBeAdded;
+                    ctx.Update(toBeUpdated);
+                }
+            }
+            ctx.SaveChanges();
+            return saveChanges;
         }
     }
 }

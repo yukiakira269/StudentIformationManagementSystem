@@ -13,7 +13,7 @@ namespace SIMS.DataTier.Infrastructure
         public bool Delete(Course entity, bool saveChanges = true)
         {
             using var ctx = new SIMSContext();
-            ctx.Remove(entity);
+            ctx.Courses.Remove(entity);
             ctx.SaveChanges();
             return saveChanges;
         }

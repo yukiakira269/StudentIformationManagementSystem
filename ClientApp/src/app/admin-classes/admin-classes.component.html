@@ -1,1 +1,27 @@
-<p>admin-classes works!</p>
+<app-admin-nav></app-admin-nav>
+<div *ngIf="errMsg">
+  <h4>{{ errMsg }}</h4>
+</div>
+
+<form *ngIf="isLoaded" [formGroup]="classForm" (ngSubmit)="updateClass(this.classForm)">
+  <div formArrayName="classList">
+    <div *ngFor="let cl of classesForm.controls; let i = index"
+         [formGroupName]="i">
+      <mat-form-field>
+        <input matInput placeholder="classId" formControlName="classId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="courseId" formControlName="courseId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="teacherId" formControlName="teacherId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="numOfStudent" formControlName="numOfStudent" />
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="deleteClass(i)">Delete</button>
+    </div>
+  </div>
+  <button type="button" class="btn-primary btn" (click)="addClass()">Add Course</button>
+  <button mat-raised-button color="success" [disabled]="classForm.invalid" type="submit">Save</button>
+</form>

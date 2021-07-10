@@ -18,6 +18,35 @@ namespace SIMS.Controllers
         StudentRepository stuRepo = new StudentRepository();
         TeacherRepository teacherRepo = new TeacherRepository();
         CourseRepository courseRepo = new CourseRepository();
+        ClassRepository classRepo = new ClassRepository();
+
+        [HttpPost("RemoveClass")]
+        public IActionResult RemoveClass([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Class>(obj.ToString());
+            Debug.WriteLine(data);
+            classRepo.Delete(data);
+            return Json(data);
+        }
+
+
+        [HttpPost("UpdateClass")]
+        public IActionResult UpdateClass([FromBody] object obj)
+        {
+            Console.WriteLine(obj.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<List<Class>>(obj.ToString());
+            data.ForEach(c => Console.WriteLine(c.CourseId));
+            classRepo.UpdateList(data);
+            return Json(data);
+        }
 
 
         [HttpPost("RemoveCourse")]
