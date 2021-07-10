@@ -15,6 +15,7 @@ import { forEachChild } from 'typescript';
 export class StudentViewcoursesComponent {
 
   public courses: Course[];
+  public checkRegis: Class;
   public registered: Course[];
   public classes: Class[];
   public student: Student;
@@ -62,24 +63,36 @@ export class StudentViewcoursesComponent {
   }
 
   // Register
-  openConfirmRegister(courseId: string) {
-    return this.registerCourse(courseId);
+  registerCourse(courseId: string) {
+    let params = new HttpParams()
+      .append('courseId', courseId)
+      .append('email', this.email);
+    return this.client.get<Class>(this.url + "student/RegisterCourse", { params })
+      .subscribe(res => {
+        console.log(res);
+        this.checkRegis = res;
+        if (res != null)
+          alert("You've registered course '" + res.CourseId +
+            "' for class '" + res.ClassId + "' successfully!");
+        else
+          alert("No Class is available for you now.");
+      }, error => console.error(error));
   }
 
-  registerCourse(courseId: string) {
-
+  alertRegister(res: Class) {
+    if (res != null) {
+      console.log(res.ClassId);
+      
+    }
   }
 
   // Cancel Register
-  openCancelCourse(classId: string) {
-    return this.cancelCourse(classId, this.email);
-  }
 
-  cancelCourse(classId: string, email: string) {
+  cancelCourse(classId: string) {
     let params = new HttpParams()
-      .append('classId', classId);
-    params.append('email', email);
-    return this.client.post<Class>(this.url + "student/CancelCourse", { params })
+      .append('classId', classId)
+      .append('email', this.email);
+    return this.client.get<Class>(this.url + "student/CancelCourse", { params })
       .subscribe(
         res => {
           this.canceled = res;
