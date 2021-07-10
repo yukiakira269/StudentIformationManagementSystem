@@ -18,11 +18,11 @@ namespace SIMS.DataTier.Infrastructure
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Grade> Find(string id, string classId)
+        public IEnumerable<Grade> Find(string studentId, string classId)
         {
             using var ctx = new SIMSContext();
 
-            return ctx.Grades.Where(g => g.StudentId.Equals(id) && g.CourseId.Equals(classId)).ToList();
+            return ctx.Grades.Where(g => g.StudentId.Equals(studentId) && g.CourseId.Equals(classId)).ToList();
         }
 
         public IEnumerable<Grade> Find(string id)

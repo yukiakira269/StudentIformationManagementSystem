@@ -65,16 +65,46 @@ namespace SIMS.Controllers
         [HttpGet("GetStudentInfo")]
         public Student GetStudentInfo([FromQuery] string email)
         {
-            return (Student)UserRepository.GetUserFromMail(email);
+            return UserRepository.GetStudentFromMail(email);
         }
 
-        [HttpPost("CancelCourse")]
-        public Class CancelCourse([FromQuery] string classId, [FromQuery] string email)
+        [HttpGet("RegisterCourse")]
+        public Class RegisterCourse([FromQuery] string courseId, string email)
+        {
+            // get list class can add
+            List<Class> classes = classRepo.GetAvailableClasses(courseId).ToList();
+
+            if (classes.Count > 0)
+            {
+                Student currentStudent = UserRepository.GetStudentFromMail(email);
+                // if has at least one available class
+                // add student to a random / first class
+                Class randCls = classes[0];
+                var cld = classRepo.AddStudentToClass(currentStudent.StudentId, randCls.ClassId);
+                // check if student is added or not
+                if (cld != null)
+                {
+                    return randCls;
+                }
+                return null;
+            }
+            else
+            {
+                // if no class available
+                // text that no class available, contact admin to ...
+                //return new Class() { ClassId="NoClass", CourseId=courseId };
+                return null;
+            }
+        }
+
+        [HttpGet("CancelCourse")]
+        public Class CancelCourse([FromQuery] string classId, string email)
         {
             Console.WriteLine(email + ", " + classId);
-            Student currentStudent = (Student)UserRepository.GetUserFromMail(email);
+            Student currentStudent = UserRepository.GetStudentFromMail(email);
             if (currentStudent != null)
             {
+                Console.WriteLine(currentStudent.StudentId + ", " + currentStudent.Name);
                 ClassDetail cld = classRepo.CancelCourseForStudent(classId, currentStudent.StudentId);
                 if (cld != null)
                     return classRepo.GetClass(classId);

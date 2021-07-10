@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class StudentNavComponent {
-  public email: string = localStorage.getItem("USER_MAIL");
+  public email: string = localStorage.getItem("USER_MAIL").split("@")[0];
   isExpanded = false;
 
   collapse() {

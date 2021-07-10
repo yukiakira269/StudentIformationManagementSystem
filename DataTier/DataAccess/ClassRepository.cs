@@ -16,12 +16,26 @@ namespace SIMS.DataTier.Infrastructure
 
         public IEnumerable<ClassDetail> GetClassDetails(string classId)
         {
-            return ctx.ClassDetails.ToList().Where(clD => clD.ClassId == (classId));
+            return ctx.ClassDetails.Where(clD => clD.ClassId.Equals(classId)).ToList();
         }
 
         public IEnumerable<ClassDetail> GetClassDetailsByStudentId(string studentId)
         {
             return ctx.ClassDetails.ToList().Where(clD => clD.StudentId == (studentId));
+        }
+
+        public IEnumerable<Class> GetAvailableClasses(string courseId)
+        {
+            List<Class> classes = ctx.Classes.Where(c => c.CourseId.Equals(courseId)).ToList();
+            foreach (Class cls in classes)
+            {
+                List<ClassDetail> clds = (List<ClassDetail>)GetClassDetails(cls.ClassId);
+                if (clds.Count >= cls.NumOfStudent)
+                {
+                    classes.Remove(cls);
+                }
+            }
+            return classes;
         }
 
         public IEnumerable<Class> GetClassesByStudentId(string studentId)
@@ -31,7 +45,6 @@ namespace SIMS.DataTier.Infrastructure
             var classes = new List<Class>();
 
             foreach (ClassDetail cld in classDetails) {
-                Console.WriteLine(cld.ClassId);
                 var tempCls = ctx.Classes.SingleOrDefault(c => c.ClassId == cld.ClassId);
                 if (tempCls != null)
                 {
@@ -66,6 +79,22 @@ namespace SIMS.DataTier.Infrastructure
             }
 
             return students;
+        }
+
+        public ClassDetail AddStudentToClass(string studentId, string classId)
+        {
+            var cld = new ClassDetail() { StudentId = studentId, ClassId = classId };
+            try
+            {
+                ctx.ClassDetails.Add(cld);
+                ctx.SaveChanges();
+                return cld;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
         }
 
         public ClassDetail CancelCourseForStudent(string classId, string studentId)

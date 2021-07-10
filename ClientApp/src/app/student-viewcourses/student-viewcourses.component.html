@@ -27,7 +27,7 @@
           <td> {{ course.name }}</td>
           <td> {{ course.fee }}</td>
           <td>
-            <button (click)="openConfirmRegister(course.courseId)"
+            <button (click)="registerCourse(course.courseId)"
                     type="button" class="btn btn-info">
               Register Now
             </button>
@@ -62,10 +62,15 @@
             </div>
           </td>
           <td>
-            <button (click)="openCancelCourse(course.courseId)"
-                    type="button" class="btn btn-danger">
-              Canel Course
-            </button>
+            <div *ngFor="let cls of classes; let i = index">
+              <div *ngIf="cls.courseId == course.courseId">
+                <button (click)="cancelCourse(cls.classId)"
+                        type="button" class="btn btn-danger">
+                  Cancel Course
+                </button>
+              </div>
+            </div>
+            
           </td>
         </tr>
       </tbody>

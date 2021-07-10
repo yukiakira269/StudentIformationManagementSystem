@@ -38,7 +38,7 @@ namespace SIMS.DataTier.DataAccess
             return null;
         }
 
-        public static object GetUserFromMail(string mail)
+        public static dynamic GetUserFromMail(string mail)
         {
             //TO-DO
             using var ctx = new SIMSContext();
@@ -46,16 +46,31 @@ namespace SIMS.DataTier.DataAccess
             {
                 if (ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
-                    return (Admin)ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail));
+                    return ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail));
                 }
                 else if (ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
-                    return (Teacher)ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail));
+                    return ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail));
                 }
                 else if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
                 {
-                    return (Student)ctx.Students.SingleOrDefault(u => u.Email.Equals(mail));
+                    return ctx.Students.SingleOrDefault(u => u.Email.Equals(mail));
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            return null;
+        }
+
+        public static Student GetStudentFromMail(string mail)
+        {
+            using var ctx = new SIMSContext();
+            try
+            {
+                if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
+                    return ctx.Students.SingleOrDefault(u => u.Email.Equals(mail));
             }
             catch (Exception ex)
             {
