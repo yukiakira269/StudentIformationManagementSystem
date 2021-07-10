@@ -52,7 +52,7 @@
             <div class="text-danger" *ngIf="phone.errors?.required">
               Phone number is required.
             </div>
-            <button id="save" class="btn btn-primary" type="submit">Save</button>
+            <button id="save" [disabled]="!updateForm.valid" class="btn btn-primary" type="submit">Save</button>
             <button id="remove" class="btn btn-outline-danger" type="submit">Remove</button>
           </form>
         </td>

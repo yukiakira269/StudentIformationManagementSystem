@@ -5,6 +5,7 @@ using SIMS.DataTier.BusinessObject;
 using SIMS.DataTier.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,38 @@ namespace SIMS.Controllers
     {
         StudentRepository stuRepo = new StudentRepository();
         TeacherRepository teacherRepo = new TeacherRepository();
+        CourseRepository courseRepo = new CourseRepository();
+
+
+        [HttpPost("RemoveCourse")]
+        public IActionResult RemoveCourse([FromBody] object obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<Course>(obj.ToString());
+            Debug.WriteLine(data);
+            courseRepo.Delete(data);
+            return Json(data);
+        }
+
+
+        [HttpPost("UpdateCourse")]
+        public IActionResult UpdateCourse([FromBody] object obj)
+        {
+            Console.WriteLine(obj.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var data = JsonConvert.DeserializeObject<List<Course>>(obj.ToString());
+            data.ForEach(c => Console.WriteLine(c.CourseId));
+            courseRepo.UpdateList(data);
+            return Json(data);
+        }
+
+
         [HttpPost("RemoveTeacher")]
         public IActionResult RemoveTeacher([FromBody] object obj)
         {

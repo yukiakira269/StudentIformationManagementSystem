@@ -12,7 +12,10 @@ namespace SIMS.DataTier.Infrastructure
     {
         public bool Delete(Course entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            ctx.Remove(entity);
+            ctx.SaveChanges();
+            return saveChanges;
         }
 
         public Course Find(params object[] values)
@@ -37,7 +40,33 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Update(Course Entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+
+            return saveChanges;
+        }
+
+        public bool UpdateList(IEnumerable<Course> Entities, bool saveChanges = true)
+        {
+            using var ctx = new SIMSContext();
+            foreach (Course course in Entities)
+            {
+                //Load to memory for performance improvement
+                var courseList = ctx.Courses.ToList();
+                var toBeAdded = courseList.SingleOrDefault(c => c.CourseId.Equals(course.CourseId));
+                //The course is not on the list
+                if (toBeAdded == null)
+                {
+                    ctx.Courses.Add(course);
+                }
+                //The course is on the list
+                else if (toBeAdded != null)
+                {
+                    var toBeUpdated = toBeAdded;
+                    ctx.Update(toBeUpdated);
+                }
+            }
+            ctx.SaveChanges();
+            return saveChanges;
         }
     }
 }

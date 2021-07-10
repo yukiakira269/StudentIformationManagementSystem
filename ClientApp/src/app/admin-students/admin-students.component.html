@@ -87,8 +87,8 @@
             <div class="text-danger" *ngIf="email.errors?.required">
               Phone Number is required.
             </div>
-            <button id="save" class="btn btn-outline-primary" type="submit">Save</button>
-            <button id="promote" class="btn btn-outline-success" type="submit">Promote to a Teacher</button>
+            <button id="save" [disabled]="!updateForm.valid" class="btn btn-outline-primary" type="submit">Save</button>
+            <button id="promote" [disabled]="!updateForm.valid" class="btn btn-outline-success" type="submit">Promote to a Teacher</button>
             <button id="remove" class="btn btn-outline-danger" type="submit">Remove</button>
 
           </form>

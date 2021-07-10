@@ -1,1 +1,26 @@
-<p>admin-courses works!</p>
+<app-admin-nav></app-admin-nav>
+<div *ngIf="errMsg">
+  <h4>{{ errMsg }}</h4>
+</div>
+
+<form [formGroup]="courseForm" (ngSubmit)="updateCourse(this.courseForm)">
+
+  <div formArrayName="courseList">
+    <div *ngFor="let course of coursesForm.controls; let i = index"
+         [formGroupName]="i">
+      <mat-form-field>
+        <input matInput placeholder="courseId" formControlName="courseId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="fee" formControlName="fee" />
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="deleteCourse(i)">Delete</button>
+    </div>
+  </div>
+  <button type="button" class="btn-primary btn" (click)="addCourse()">Add Course</button>
+  <button mat-raised-button color="success" [disabled]="courseForm.invalid" type="submit">Save</button>
+
+</form>
