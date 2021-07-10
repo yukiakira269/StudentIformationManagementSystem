@@ -79,13 +79,6 @@ export class StudentViewcoursesComponent {
       }, error => console.error(error));
   }
 
-  alertRegister(res: Class) {
-    if (res != null) {
-      console.log(res.ClassId);
-      
-    }
-  }
-
   // Cancel Register
 
   cancelCourse(classId: string) {
