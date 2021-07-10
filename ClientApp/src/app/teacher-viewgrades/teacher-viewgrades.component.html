@@ -33,18 +33,19 @@
               </tr>
             </thead>
             <tbody *ngIf="students">
-              <tr *ngFor="let student of students">
-                <td>{{ student.studentId }}</td>
+              <tr *ngFor="let student of students; let i2 = index">
+
+                <td> {{ i2 }}{{ student.studentId }}</td>
                 <td>{{ student.name }}</td>
                 <td>
                   <button class="btn btn-primary"
-                          (click)="itemsVisibility2[i] = !itemsVisibility2[i];
+                          (click)="itemsVisibility2[i2] = !itemsVisibility2[i2];
                           getGrade(student.studentId)">
                     View Grade
                   </button>
                 </td>
                 <td>
-                  <table *ngIf="itemsVisibility2[i]">
+                  <table *ngIf="itemsVisibility2[i2] && isLoaded">
                     <thead>
                       <tr>
                         <th>CourseId</th>

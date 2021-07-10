@@ -19,6 +19,7 @@ export class TeacherViewgradesComponent {
   client: HttpClient;
   url: string = "";
 
+  isLoaded: boolean = false;
   gradeStatus: string;
   errors: string[];
 
@@ -38,6 +39,7 @@ export class TeacherViewgradesComponent {
   }
 
   getGrade(studentId: string) {
+    this.isLoaded = false;
     this.gradeStatus = null;
     let params = new HttpParams()
       .append('id', studentId);
@@ -45,7 +47,8 @@ export class TeacherViewgradesComponent {
       .subscribe(
         res => {
           this.grades = res;
-          console.log("Grade" + res)
+          console.log("Grade" + res);
+          this.isLoaded = true;
         },
         err => console.error(err),
       );
@@ -65,6 +68,7 @@ export class TeacherViewgradesComponent {
   }
 
   getStudentList(classId: string) {
+    this.isLoaded = false;
     this.gradeStatus = null;
     let params = new HttpParams()
       .append('classId', classId);
@@ -72,6 +76,7 @@ export class TeacherViewgradesComponent {
       .subscribe(res => {
         this.students = res;
         console.log("Student" + this.students);
+        this.isLoaded = true;
       }, err => console.error(err));
   }
 
