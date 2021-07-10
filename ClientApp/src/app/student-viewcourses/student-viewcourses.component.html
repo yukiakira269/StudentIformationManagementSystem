@@ -1,0 +1,77 @@
+<app-student-nav></app-student-nav>
+
+<div class="course-title">
+  <h1 (click)="getCourses()">Course List</h1>
+  <h1 (click)="getRegisteredCourses()">Registered Courses</h1>
+</div>
+
+<p *ngIf="!courses && !registered"><em>Loading.....</em></p>
+
+<div *ngIf="!registered" id="p1">
+
+  <div *ngIf="courses">
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Course Id</th>
+          <th>Course Name</th>
+          <th>Fee</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses; let i = index">
+          <td> {{ i + 1 }}</td>
+          <td> {{ course.courseId }} </td>
+          <td> {{ course.name }}</td>
+          <td> {{ course.fee }}</td>
+          <td>
+            <button (click)="openConfirmRegister(course.courseId)"
+                    type="button" class="btn btn-info">
+              Register Now
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="!courses" id="p2">
+
+  <div *ngIf="registered">
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Course Id</th>
+          <th>Course Name</th>
+          <th>Class</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of registered; let i = index">
+          <td> {{ i + 1 }}</td>
+          <td> {{ course.courseId }} </td>
+          <td> {{ course.name }}</td>
+          <td>
+            <div *ngFor="let cls of classes; let i = index">
+              <span *ngIf="cls.courseId == course.courseId">{{ cls.classId }}</span>
+            </div>
+          </td>
+          <td>
+            <button (click)="openCancelCourse(course.courseId)"
+                    type="button" class="btn btn-danger">
+              Canel Course
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+

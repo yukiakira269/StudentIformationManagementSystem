@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SIMS.DataTier.BusinessObject;
+using SIMS.DataTier.DataAccess;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace SIMS.DataTier.Infrastructure
 {
     public class GradeRepository : IRepository<Grade>
     {
+        private static SIMSContext ctx = new SIMSContext();
+
         public bool Delete(Grade entity, bool saveChanges = true)
         {
             throw new NotImplementedException();
@@ -36,7 +39,16 @@ namespace SIMS.DataTier.Infrastructure
 
         public IEnumerable<Grade> FindAll()
         {
-            throw new NotImplementedException();
+            return ctx.Grades.ToList();
+        }
+
+        public IEnumerable<Grade> FindAll(string email)
+        {
+            var id = UserRepository.GetIdFromMail(email);
+            return ctx.Grades.ToList().Where(c =>
+            {
+                return c.StudentId.Equals(id);
+            });
         }
 
         public IEnumerable<Grade> getAll()

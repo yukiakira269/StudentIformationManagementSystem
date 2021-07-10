@@ -37,5 +37,31 @@ namespace SIMS.DataTier.DataAccess
             }
             return null;
         }
+
+        public static object GetUserFromMail(string mail)
+        {
+            //TO-DO
+            using var ctx = new SIMSContext();
+            try
+            {
+                if (ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail)) != null)
+                {
+                    return (Admin)ctx.Admins.SingleOrDefault(u => u.Email.Equals(mail));
+                }
+                else if (ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail)) != null)
+                {
+                    return (Teacher)ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail));
+                }
+                else if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
+                {
+                    return (Student)ctx.Students.SingleOrDefault(u => u.Email.Equals(mail));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            return null;
+        }
     }
 }

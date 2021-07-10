@@ -25,8 +25,12 @@ import { TeacherNavComponent } from './teacher-nav/teacher-nav.component';
 import { TeacherViewclassesComponent } from './teacher-viewclasses/teacher-viewclasses.component';
 import { TeacherViewgradesComponent } from './teacher-viewgrades/teacher-viewgrades.component';
 import { TeacherFeedbackComponent } from './teacher-feedback/teacher-feedback.component';
+
 import { StudentComponent } from './student/student.component';
 import { StudentNavComponent } from './student-nav/student-nav.component';
+import { StudentViewcoursesComponent } from './student-viewcourses/student-viewcourses.component';
+import { StudentViewgradesComponent } from './student-viewgrades/student-viewgrades.component';
+
 import { CoursePaymentComponent } from './course-payment/course-payment.component';
 import { AdminNavComponent } from './admin-nav/admin-nav.component';
 import { AdminStudentsComponent } from './admin-students/admin-students.component';
@@ -47,9 +51,13 @@ import { AdminComponent } from './admin/admin.component';
     TeacherViewclassesComponent,
     TeacherViewgradesComponent,
     TeacherFeedbackComponent,
+
     StudentComponent,
     StudentNavComponent,
+    StudentViewcoursesComponent,
+    StudentViewgradesComponent,
     CoursePaymentComponent,
+
     AdminNavComponent,
     AdminStudentsComponent,
     AdminTeachersComponent,
@@ -78,6 +86,11 @@ import { AdminComponent } from './admin/admin.component';
       { path: 'teacher/viewclass', component: TeacherViewclassesComponent },
       { path: 'teacher/viewgrades', component: TeacherViewgradesComponent },
       { path: 'teacher/feedbacks', component: TeacherFeedbackComponent },
+
+      { path: 'student', component: StudentComponent },
+      { path: 'student/viewcourses', component: StudentViewcoursesComponent },
+      { path: 'student/viewgrades', component: StudentViewgradesComponent },
+
       { path: 'course', component: CoursePaymentComponent },
       { path: 'student', component: StudentComponent },
       { path: 'student/register', component: CoursePaymentComponent },

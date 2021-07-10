@@ -17,7 +17,35 @@ namespace SIMS.DataTier.Infrastructure
         public IEnumerable<ClassDetail> GetClassDetails(string classId)
         {
             return ctx.ClassDetails.ToList().Where(clD => clD.ClassId == (classId));
+        }
 
+        public IEnumerable<ClassDetail> GetClassDetailsByStudentId(string studentId)
+        {
+            return ctx.ClassDetails.ToList().Where(clD => clD.StudentId == (studentId));
+        }
+
+        public IEnumerable<Class> GetClassesByStudentId(string studentId)
+        {
+            List<ClassDetail> classDetails = ctx.ClassDetails
+                .Where(c => c.StudentId.Equals(studentId)).ToList();
+            var classes = new List<Class>();
+
+            foreach (ClassDetail cld in classDetails) {
+                Console.WriteLine(cld.ClassId);
+                var tempCls = ctx.Classes.SingleOrDefault(c => c.ClassId == cld.ClassId);
+                if (tempCls != null)
+                {
+                    classes.Add(tempCls);
+                    Console.WriteLine("Class-courseId: " + tempCls.CourseId);
+                }
+            }
+
+            return classes;
+        }
+
+        public Class GetClass(string classId)
+        {
+            return ctx.Classes.SingleOrDefault(c => c.ClassId.Equals(classId));
         }
 
         public IEnumerable<Student> GetStudentList(string classId)
@@ -41,6 +69,29 @@ namespace SIMS.DataTier.Infrastructure
 
         }
 
+        public ClassDetail CancelCourseForStudent(string classId, string studentId)
+        {
+            var classDetails = ctx.ClassDetails.ToList();
+
+            foreach (ClassDetail cld in classDetails)
+            {
+                if (cld.ClassId.Equals(classId) && cld.StudentId.Equals(studentId))
+                {
+                    try
+                    {
+                        ctx.ClassDetails.Remove(cld);
+                        ctx.SaveChanges();
+                        Console.WriteLine("Class '"+ cld.ClassId +"' for '" + studentId + "  Canceled!");
+                        return cld;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+            }
+            return null;
+        }
 
         public bool Delete(Class entity, bool saveChanges = true)
         {

@@ -31,11 +31,10 @@ export class UserProfileComponent implements OnInit {
   getRole() {
     console.log(localStorage.getItem("USER_MAIL"));
     var data = JSON.stringify(localStorage.getItem("USER_MAIL"));
-    console.log(data);
     var headers = new HttpHeaders().set("Content-type", "application/json");
     return this.client.post<string>(this.baseUrl + "user", data, { headers })
       .subscribe(res => {
-        console.log("Role is" + res);
+        console.log("Role is " + res);
         if (res.includes("ST")) this.student = true;
         else if (res.includes("TE")) this.teacher = true;
         else if (res.includes("AD")) this.admin = true;

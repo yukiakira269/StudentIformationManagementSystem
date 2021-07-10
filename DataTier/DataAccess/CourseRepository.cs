@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SIMS.DataTier.BusinessObject;
+using SIMS.DataTier.DataAccess;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,18 @@ namespace SIMS.DataTier.Infrastructure
 {
     public class CourseRepository : IRepository<Course>
     {
+        private static SIMSContext ctx = new SIMSContext();
+
+        public IEnumerable<Course> GetCourseList()
+        {
+            return ctx.Courses.ToList();
+        }
+
+        public Course GetCourse(string courseId)
+        {
+            return ctx.Courses.SingleOrDefault(c => c.CourseId.Equals(courseId));
+        }
+
         public bool Delete(Course entity, bool saveChanges = true)
         {
             using var ctx = new SIMSContext();
@@ -25,10 +38,10 @@ namespace SIMS.DataTier.Infrastructure
 
         public IEnumerable<Course> FindAll()
         {
-            throw new NotImplementedException();
+            return ctx.Courses.ToList();
         }
 
-        public IEnumerable<Course> getAll()
+        public IEnumerable<Course> GetAll()
         {
             throw new NotImplementedException();
         }
