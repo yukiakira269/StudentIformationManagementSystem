@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -79,6 +80,7 @@ import { AdminComponent } from './admin/admin.component';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSelectModule,
     RouterModule.forRoot([
       { path: '', component: UserProfileComponent, pathMatch: 'full' },
       { path: 'home', component: UserProfileComponent },

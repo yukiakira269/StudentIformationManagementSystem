@@ -2,6 +2,9 @@
 <div *ngIf="errMsg">
   <h4>{{ errMsg }}</h4>
 </div>
+<div *ngIf="!isLoaded">
+  <h4 class="alert alert-warning">Loading...</h4>
+</div>
 
 <form *ngIf="isLoaded" [formGroup]="classForm" (ngSubmit)="updateClass(this.classForm)">
   <div formArrayName="classList">
@@ -14,7 +17,11 @@
         <input matInput placeholder="courseId" formControlName="courseId" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="teacherId" formControlName="teacherId" />
+        <mat-select formControlName="teacherId">
+          <mat-option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
+            {{ teacher.teacherId }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="numOfStudent" formControlName="numOfStudent" />
@@ -22,6 +29,6 @@
       <button mat-raised-button color="warn" (click)="deleteClass(i)">Delete</button>
     </div>
   </div>
-  <button type="button" class="btn-primary btn" (click)="addClass()">Add Course</button>
+  <button type="button" class="btn-primary btn" (click)="addClass()">Add Class</button>
   <button mat-raised-button color="success" [disabled]="classForm.invalid" type="submit">Save</button>
 </form>

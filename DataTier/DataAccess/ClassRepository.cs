@@ -66,7 +66,6 @@ namespace SIMS.DataTier.Infrastructure
             }
 
             return students;
-
         }
 
         public ClassDetail CancelCourseForStudent(string classId, string studentId)
@@ -140,24 +139,25 @@ namespace SIMS.DataTier.Infrastructure
         public bool UpdateList(IEnumerable<Class> Entities, bool saveChanges = true)
         {
             using var ctx = new SIMSContext();
+
             foreach (Class cl in Entities)
             {
-                //Load to memory for performance improvement
-                var classList = ctx.Classes.ToList();
-                var toBeAdded = classList.SingleOrDefault(c => c.CourseId.Equals(cl.CourseId));
-                //The course is not on the list
+                Console.WriteLine(cl.NumOfStudent);
+                var toBeAdded = ctx.Classes.AsNoTracking<Class>().SingleOrDefault(c => c.ClassId.Equals(cl.ClassId));
+                //The class is not on the list
                 if (toBeAdded == null)
                 {
                     ctx.Classes.Add(cl);
                 }
-                //The course is on the list
+                //The class is on the list
                 else if (toBeAdded != null)
                 {
-                    var toBeUpdated = toBeAdded;
-                    ctx.Update(toBeUpdated);
+                    var toBeUpdated = cl;
+                    ctx.Classes.Update(toBeUpdated);
                 }
             }
             ctx.SaveChanges();
+
             return saveChanges;
         }
     }

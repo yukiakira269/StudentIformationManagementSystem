@@ -11,6 +11,7 @@ export class AdminClassesComponent implements OnInit {
   baseUrl: string;
   client: HttpClient;
   classes: Class[];
+  teachers: Teacher[];
   classForm: FormGroup;
   errMsg: string;
   isLoaded: boolean;
@@ -26,6 +27,7 @@ export class AdminClassesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClasses();
+    this.getTeachers();
     this.classForm = this.fb.group({
       classList: this.fb.array([])
     });
@@ -94,6 +96,16 @@ export class AdminClassesComponent implements OnInit {
     );
   }
 
+  getTeachers() {
+    this.client.get<Teacher[]>(this.baseUrl + ("admin/GetTeachers"))
+      .subscribe(
+        res => {
+          this.teachers = res;
+          console.log(res);
+        },
+        err => console.error(err)
+      )
+  }
 
 }
 interface Class {
@@ -102,4 +114,9 @@ interface Class {
   teacherId: string,
   numOfStudent: number,
 }
+
+interface Teacher {
+  TeacherId: string,
+}
+
 
