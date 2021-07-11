@@ -4,6 +4,7 @@ It's a web application.
 ## Installation
 Use the package manager [npm](https://nodejs.dev/) to install all requrired dependencies.
 ```bash
+cd ClientApp
 npm install
 ```
 After installing, executing the 
