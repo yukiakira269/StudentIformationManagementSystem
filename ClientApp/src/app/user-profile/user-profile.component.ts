@@ -13,6 +13,7 @@ export class UserProfileComponent implements OnInit {
   admin: boolean;
   unauth: boolean;
   isLoaded: boolean;
+  role: string;
 
   client: HttpClient;
   baseUrl: string;
@@ -29,16 +30,27 @@ export class UserProfileComponent implements OnInit {
   }
 
   getRole() {
-    console.log(localStorage.getItem("USER_MAIL"));
     var data = JSON.stringify(localStorage.getItem("USER_MAIL"));
     var headers = new HttpHeaders().set("Content-type", "application/json");
     return this.client.post<string>(this.baseUrl + "user", data, { headers })
       .subscribe(res => {
-        console.log("Role is " + res);
-        if (res.includes("ST")) this.student = true;
-        else if (res.includes("TE")) this.teacher = true;
-        else if (res.includes("AD")) this.admin = true;
-        else this.unauth = true;
+        console.log("Mail: " + data);
+        if (res.includes("ST")) {
+          this.student = true;
+          this.role = "Student";
+        }
+        else if (res.includes("TE")) {
+          this.teacher = true;
+          this.role = "Teacher";
+        }
+        else if (res.includes("AD")) {
+          this.admin = true;
+          this.role = "Admin";
+        }
+        else
+          this.unauth = true;
+        if (this.role)
+          console.log("Role: " + JSON.stringify(this.role));
         this.isLoaded = true;
       }, err => console.error(err));
   }

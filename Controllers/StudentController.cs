@@ -59,7 +59,7 @@ namespace SIMS.Controllers
         [HttpGet("GetGradeList")]
         public IEnumerable<Grade> GetGradeList([FromQuery] string email)
         {
-            return gradeRepo.FindAll().ToList();
+            return gradeRepo.FindAll(email).ToList();
         }
 
         [HttpGet("GetStudentInfo")]

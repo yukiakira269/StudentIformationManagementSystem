@@ -28,21 +28,25 @@ export class StudentViewgradesComponent {
     this.client = http;
     this.url = baseUrl;
     this.email = localStorage.getItem("USER_MAIL");
-    this.getUser(this.email).subscribe(res => this.currentStudent = res, err => console.error(err));
-    if (this.currentStudent)
-      this.getGrades().subscribe(res => this.grades = res, err => console.error(err));
+    this.getUser(this.email);
+    this.getGrades();
   }
 
   getUser(email: string) {
     let params = new HttpParams()
       .append('email', localStorage.getItem("USER_MAIL"));
-    return this.client.get<Student>(this.url + "student/GetStudentInfo", { params });
+    return this.client.get<Student>(this.url + "student/GetStudentInfo", { params })
+      .subscribe(res => {
+        this.currentStudent = res;
+        console.log(res)
+      }, err => console.error(err));
   }
 
   getGrades() {
     let params = new HttpParams()
       .append('email', localStorage.getItem("USER_MAIL"));
-    return this.client.get<Grade[]>(this.url + "student/GetGradeList", { params });
+    return this.client.get<Grade[]>(this.url + "student/GetGradeList", { params })
+      .subscribe(res => { this.grades = res; console.log(res) }, err => console.error(err));
   }
 
 }

@@ -1,6 +1,6 @@
 <app-student-nav></app-student-nav>
 
-<h1>Grade report for {{email}}</h1>
+<h1 *ngIf="currentStudent">Grade report for {{currentStudent.name}}</h1>
 
 <p *ngIf="!grades"><em>Loading.....</em></p>
 
@@ -17,7 +17,7 @@
       <tr *ngFor="let grade of grades; let i = index">
         <td> {{ i + 1 }}</td>
         <td> {{ grade.courseId }} </td>
-        <td> {{ grade.grade }}</td>
+        <td> {{ grade.grade1 }}</td>
       </tr>
     </tbody>
   </table>

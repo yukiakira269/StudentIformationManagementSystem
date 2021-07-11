@@ -33,9 +33,7 @@ export class AuthService {
           //Sync with back-end
           localStorage.setItem("USER_MAIL", user.email);
           this.setMail(JSON.stringify(localStorage.getItem("USER_MAIL")))
-            .subscribe(mail => {
-              console.log("mail " + mail)
-            });
+            .subscribe(mail => { });
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out

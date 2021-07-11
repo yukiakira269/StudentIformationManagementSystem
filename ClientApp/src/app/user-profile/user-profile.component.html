@@ -33,9 +33,10 @@
         <app-admin-nav></app-admin-nav>
       </div>
       <div *ngIf="!unauth">
-        <h3>Howdy, {{ user.displayName }}</h3>
-        <img [src]="user.photoURL">
-        <p>UID: {{ user.uid }}</p>
+        <h2>Howdy, {{ user.displayName }}.</h2>
+        <p>UID: {{ user.uid }}.</p>
+        <p>Role: "{{role}}".</p>
+        <img [src]="user.photoURL" style="margin-bottom: 32px; border: 2px solid #2f2f2f;"><br/>
         <button (click)="auth.signOut()">Logout</button>
       </div>
       <div *ngIf="unauth">
