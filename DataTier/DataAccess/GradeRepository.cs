@@ -32,6 +32,21 @@ namespace SIMS.DataTier.Infrastructure
             return ctx.Grades.Where(g => g.StudentId.Equals(id)).ToList();
         }
 
+        public IEnumerable<Grade> FindGrade(string id, string teacherId)
+        {
+            using var ctx = new SIMSContext();
+            var grades = new List<Grade>();
+            //Get the class(es) taught by the teacher
+            var courses = ctx.Classes.Where(c => c.Teacher.TeacherId.Equals(teacherId)).ToList();
+            foreach (Class cl in courses)
+            {
+                grades.AddRange(
+                    ctx.Grades.Where(c => c.StudentId.Equals(id) && c.CourseId.Equals(cl.CourseId)).ToList()
+                    );
+            }
+            return grades;
+        }
+
         public Grade Find(params object[] values)
         {
             throw new NotImplementedException();
@@ -58,7 +73,22 @@ namespace SIMS.DataTier.Infrastructure
 
         public bool Insert(Grade entity, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            using var ctx = new SIMSContext();
+            //The Student has not been graded
+            var grade = ctx.Grades.SingleOrDefault
+                (g => g.CourseId.Equals(entity.CourseId) &&
+                g.StudentId.Equals(entity.StudentId));
+            if (grade == null)
+            {
+                ctx.Grades.Add(entity);
+            }
+            //The Student has been graded but re-register
+            else
+            {
+                Update(entity);
+            }
+            ctx.SaveChanges();
+            return saveChanges;
         }
 
         public bool Update(Grade Entity, bool saveChanges = true)

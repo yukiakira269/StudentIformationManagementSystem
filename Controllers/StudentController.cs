@@ -81,6 +81,15 @@ namespace SIMS.Controllers
                 // add student to a random / first class
                 Class randCls = classes[0];
                 var cld = classRepo.AddStudentToClass(currentStudent.StudentId, randCls.ClassId);
+                //Add default grades
+                var id = currentStudent.StudentId;
+                Grade g = new Grade
+                {
+                    CourseId = courseId,
+                    Grade1 = 0,
+                    StudentId = id
+                };
+                gradeRepo.Insert(g);
                 // check if student is added or not
                 if (cld != null)
                 {

@@ -125,6 +125,11 @@ namespace SIMS.DataTier.Infrastructure
         public bool Delete(Class entity, bool saveChanges = true)
         {
             using var ctx = new SIMSContext();
+            var detToBeRemoved = ctx.ClassDetails.Where(d => d.ClassId.Equals(entity.ClassId));
+            foreach(var d in detToBeRemoved)
+            {
+                ctx.ClassDetails.Remove(d);
+            }
             ctx.Classes.Remove(entity);
             ctx.SaveChanges();
             return saveChanges;

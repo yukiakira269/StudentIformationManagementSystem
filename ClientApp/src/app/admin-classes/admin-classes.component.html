@@ -14,7 +14,11 @@
         <input matInput placeholder="classId" formControlName="classId" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="courseId" formControlName="courseId" />
+        <mat-select formControlName="courseId">
+          <mat-option *ngFor="let course of courses" [value]="course.courseId">
+            {{ course.courseId }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="teacherId">

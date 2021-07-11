@@ -42,7 +42,8 @@ export class TeacherViewgradesComponent {
     this.isLoaded = false;
     this.gradeStatus = null;
     let params = new HttpParams()
-      .append('id', studentId);
+      .append('id', studentId)
+      .append('email', localStorage.getItem("USER_MAIL"));
     return this.client.get<Grade[]>(this.url + "teacher/GetGrade", { params })
       .subscribe(
         res => {

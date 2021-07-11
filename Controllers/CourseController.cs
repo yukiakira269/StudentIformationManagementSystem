@@ -19,10 +19,5 @@ namespace SIMS.Controllers
             return ctx.Courses.ToList();
         }
 
-        [HttpPost("Register")]
-        public void RegisterCourse([FromBody] object obj)
-        {
-
-        }
     }
 }

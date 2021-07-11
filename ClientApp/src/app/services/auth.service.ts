@@ -68,8 +68,7 @@ export class AuthService {
   async signOut() {
     localStorage.clear();
     await this.afAuth.signOut();
-    await this.router.navigate(['/']);
-    return location.reload();
+    location.reload();
   }
 
   setMail(mail: string): Observable<any> {
