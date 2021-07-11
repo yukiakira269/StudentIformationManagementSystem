@@ -2,14 +2,14 @@
 It's a web application.
 
 ## Installation
-Use the package manager [npm](https://nodejs.dev/) to install foobar.
+Use the package manager [npm](https://nodejs.dev/) to install all requrired dependencies.
 ```bash
 npm install
-ng serve
 ```
+After installing, run the Run.bat file, wait until the application is ready, then normal usage may proceed.
 
 ## Usage
-Still nothing...
+Grade management
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. <br/>
