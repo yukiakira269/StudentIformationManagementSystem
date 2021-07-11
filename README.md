@@ -6,7 +6,11 @@ Use the package manager [npm](https://nodejs.dev/) to install all requrired depe
 ```bash
 npm install
 ```
-After installing, run the Run.bat file, wait until the application is ready, then normal usage may proceed.
+After installing, executing the 
+```
+Run.bat
+```
+file, wait until the application is ready, then normal usage may proceed.
 
 ## Usage
 Grade management
