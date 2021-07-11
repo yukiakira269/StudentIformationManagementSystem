@@ -44,7 +44,8 @@ namespace SIMS.DataTier.Infrastructure
                 .Where(c => c.StudentId.Equals(studentId)).ToList();
             var classes = new List<Class>();
 
-            foreach (ClassDetail cld in classDetails) {
+            foreach (ClassDetail cld in classDetails)
+            {
                 var tempCls = ctx.Classes.SingleOrDefault(c => c.ClassId == cld.ClassId);
                 if (tempCls != null)
                 {
@@ -109,7 +110,7 @@ namespace SIMS.DataTier.Infrastructure
                     {
                         ctx.ClassDetails.Remove(cld);
                         ctx.SaveChanges();
-                        Console.WriteLine("Class '"+ cld.ClassId +"' for '" + studentId + "  Canceled!");
+                        Console.WriteLine("Class '" + cld.ClassId + "' for '" + studentId + "  Canceled!");
                         return cld;
                     }
                     catch (Exception ex)
@@ -142,10 +143,7 @@ namespace SIMS.DataTier.Infrastructure
         public IEnumerable<Class> FindAll(string email)
         {
             var id = UserRepository.GetIdFromMail(email);
-            return ctx.Classes.ToList().Where(c =>
-            {
-                return c.TeacherId.Equals(id);
-            });
+            return ctx.Classes.Where(c => c.TeacherId.Equals(id)).ToList();
         }
 
 

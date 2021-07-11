@@ -82,7 +82,7 @@ export class TeacherViewgradesComponent {
 
 
   closeAllButThis(index: number) {
-    this.itemsVisibility[index] = true;
+    this.itemsVisibility[index] = !this.itemsVisibility[index];
     for (let i = 0; i < this.itemsVisibility.length; i++) {
       if (i !== index) {
         this.itemsVisibility[i] = false;
@@ -91,8 +91,7 @@ export class TeacherViewgradesComponent {
   }
 
   closeAllButThis2(index: number) {
-    console.log(index);
-    this.itemsVisibility2[index] = true;
+    this.itemsVisibility2[index] = !this.itemsVisibility2[index];
     for (let i = 0; i < this.itemsVisibility2.length; i++) {
       if (i !== index) {
         this.itemsVisibility2[i] = false;
