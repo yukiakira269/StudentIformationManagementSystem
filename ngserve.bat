@@ -1,0 +1,2 @@
+cd ClientApp
+ng serve
