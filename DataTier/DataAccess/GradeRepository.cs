@@ -32,19 +32,13 @@ namespace SIMS.DataTier.Infrastructure
             return ctx.Grades.Where(g => g.StudentId.Equals(id)).ToList();
         }
 
-        public IEnumerable<Grade> FindGrade(string id, string teacherId)
+        public IEnumerable<Grade> FindGrade(string studentId, string classId, string teacherId)
         {
-            using var ctx = new SIMSContext();
-            var grades = new List<Grade>();
-            //Get the class(es) taught by the teacher
-            var courses = ctx.Classes.Where(c => c.Teacher.TeacherId.Equals(teacherId)).ToList();
-            foreach (Class cl in courses)
-            {
-                grades.AddRange(
-                    ctx.Grades.Where(c => c.StudentId.Equals(id) && c.CourseId.Equals(cl.CourseId)).ToList()
-                    );
-            }
-            return grades;
+            var teachingClass = ctx.Classes.SingleOrDefault(c => c.ClassId.Equals(classId) && c.TeacherId.Equals(teacherId));
+            return ctx.Grades.Where(g =>
+            g.CourseId.Equals(teachingClass.CourseId)
+            && g.StudentId.Equals(studentId)
+            );
         }
 
         public Grade Find(params object[] values)

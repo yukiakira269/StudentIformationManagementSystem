@@ -58,11 +58,11 @@ namespace SIMS.Controllers
 
 
         [HttpGet("GetGrade")]
-        public IEnumerable<Grade> GetGrade([FromQuery] string id, string email)
+        public IEnumerable<Grade> GetGrade([FromQuery] string id, string classId, string email)
         {
             Console.WriteLine(id);
             var teacherId = UserRepository.GetIdFromMail(email);
-            return gradeRepo.FindGrade(id,teacherId);
+            return gradeRepo.FindGrade(id,classId,teacherId);
         }
 
         [HttpPost("GradeStudent")]
