@@ -39,6 +39,23 @@ namespace SIMS.DataTier.Infrastructure
         public bool Delete(Teacher entity, bool saveChanges = true)
         {
             using var ctx = new SIMSContext();
+            var teachingClass = ctx.Classes.AsNoTracking<Class>().Where(c => c.TeacherId.Equals(entity.TeacherId)).ToList();
+            foreach(var cl in teachingClass)
+            {
+                Class c = new Class
+                {
+                    ClassId = cl.ClassId,
+                    CourseId = cl.CourseId,
+                    NumOfStudent = cl.NumOfStudent,
+                    TeacherId = null
+                };
+                ctx.Classes.Update(c);
+            }
+            var feedbacks = ctx.Feedbacks.AsNoTracking<Feedback>().Where(f => f.TeacherId.Equals(entity.TeacherId)).ToList();
+            foreach(var f in feedbacks)
+            {
+                ctx.Feedbacks.Remove(f);
+            }
             ctx.Teachers.Remove(entity);
             ctx.SaveChanges();
             return saveChanges;
