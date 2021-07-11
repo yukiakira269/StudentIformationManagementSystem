@@ -7,6 +7,10 @@
 
 <p *ngIf="!courses && !registered"><em>Loading.....</em></p>
 
+<div class="alert alert-success" role="alert" *ngIf="checkRegis">
+  Registered {{ checkRegis.courseId }} for class {{ checkRegis.classId }} successfully.
+</div>
+
 <div *ngIf="!registered" id="p1">
 
   <div *ngIf="courses">

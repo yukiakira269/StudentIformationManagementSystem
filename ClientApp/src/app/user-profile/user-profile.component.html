@@ -5,23 +5,25 @@
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-  <app-guest-nav></app-guest-nav>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <h3>Howdy, GUEST</h3>
-  <p>Login to get started...</p>
-
-  <button (click)="auth.googleSignin()">
-    <i class="fa fa-google"></i> Login with Google
-  </button>
+  <div *ngIf="!role">
+    <app-guest-nav></app-guest-nav>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <div *ngIf="!isLoaded">Loading...</div>
+    <div *ngIf="isLoaded">
+      <h3>Howdy, GUEST</h3>
+      <p>Login to get started...</p>
+      <button (click)="auth.googleSignin()">
+        <i class="fa fa-google"></i> Login with Google
+      </button>
+    </div>
+  </div>
 </ng-template>
 
 
 <!-- User logged in -->
 <ng-template #authenticated>
   <div *ngIf="auth.user$ | async as user">
-    <div *ngIf="!isLoaded">
-      Loading...
-    </div>
+    <div *ngIf="!isLoaded">Loading...</div>
     <div *ngIf="isLoaded">
       <div *ngIf="teacher">
         <app-teacher-nav></app-teacher-nav>
@@ -33,10 +35,11 @@
         <app-admin-nav></app-admin-nav>
       </div>
       <div *ngIf="!unauth">
-        <h3>Howdy, {{ user.displayName }}</h3>
-        <img [src]="user.photoURL">
-        <p>UID: {{ user.uid }}</p>
-        <button (click)="auth.signOut()">Logout</button>
+        <h2>Howdy, {{ user.displayName }}.</h2>
+        <p>UID: {{ user.uid }}.</p>
+        <p>Role: "{{role}}".</p>
+        <img [src]="user.photoURL" style="margin-bottom: 32px; border: 2px solid #2f2f2f; border-radius: 5px;">
+        <br/><button (click)="auth.signOut()">Logout</button>
       </div>
       <div *ngIf="unauth">
         <h1 class="text-danger">
