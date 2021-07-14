@@ -20,6 +20,8 @@ export class StudentViewcoursesComponent {
   public classes: Class[];
   public student: Student;
   public canceled: Class;
+  public canAlert: boolean = false;
+  public alterId: string;
   email: string;
   url: string = "";
   client: HttpClient;
@@ -71,12 +73,9 @@ export class StudentViewcoursesComponent {
       .subscribe(res => {
         console.log(res);
         this.checkRegis = res;
-        if (res != null)
-          alert("You've registered course '" + res.CourseId +
-            "' for class '" + res.ClassId + "' successfully!");
-        else
-          alert("No Class is available for you now.");
-      }, error => console.error(error));
+        this.canAlert = true;
+        this.alterId = courseId
+      }, error => { console.error(error); this.alterId = courseId });
   }
 
   // Cancel Register

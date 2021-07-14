@@ -16,6 +16,7 @@ export class StudentViewgradesComponent {
   public grades: Grade[];
   public currentStudent: Student;
   public email: string = "";
+  public canAlert: boolean = false;
   client: HttpClient;
   url: string = "";
 

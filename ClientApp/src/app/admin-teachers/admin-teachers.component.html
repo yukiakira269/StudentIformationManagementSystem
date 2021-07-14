@@ -46,11 +46,11 @@
             <div class="text-danger" *ngIf="phone.errors?.required">
               Phone number is required.
             </div>
-            <label for="phone">Faculty</label>
+            <label for="faculty">Faculty</label>
             <input required class="form-control" type="text" name="faculty"
                    #faculty="ngModel" [(ngModel)]="m.faculty" />
             <div class="text-danger" *ngIf="phone.errors?.required">
-              Phone number is required.
+              Faculty is required.
             </div>
             <button id="save" [disabled]="!updateForm.valid" class="btn btn-primary" type="submit">Save</button>
             <button id="remove" class="btn btn-outline-danger" type="submit">Remove</button>

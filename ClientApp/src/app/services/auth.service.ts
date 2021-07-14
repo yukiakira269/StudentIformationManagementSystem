@@ -32,6 +32,7 @@ export class AuthService {
         if (user) {
           //Sync with back-end
           localStorage.setItem("USER_MAIL", user.email);
+          localStorage.setItem("USER_PHOTO", user.photoURL);
           this.setMail(JSON.stringify(localStorage.getItem("USER_MAIL")))
             .subscribe(mail => { });
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();

@@ -7,12 +7,15 @@
 
 <p *ngIf="!courses && !registered"><em>Loading.....</em></p>
 
-<div class="alert alert-success" role="alert" *ngIf="checkRegis">
-  Registered {{ checkRegis.courseId }} for class {{ checkRegis.classId }} successfully.
+<div *ngIf="canAlert">
+  <div class="alert alert-success" role="alert" *ngIf="checkRegis">
+    Registered {{ checkRegis.courseId }} for class {{ checkRegis.classId }} successfully.
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="!checkRegis">
+    There is no class available for {{ alterId }}. Please contact Admin for supporting.
+  </div>
 </div>
-
 <div *ngIf="!registered" id="p1">
-
   <div *ngIf="courses">
     <table class='table table-striped' aria-labelledby="tableLabel">
       <thead>
@@ -26,18 +29,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let course of courses; let i = index">
-          <td> {{ i + 1 }}</td>
-          <td> {{ course.courseId }} </td>
-          <td> {{ course.name }}</td>
-          <td> {{ course.fee }}</td>
-          <td>
-            <button (click)="registerCourse(course.courseId)"
-                    type="button" class="btn btn-info">
-              Register Now
-            </button>
-          </td>
-        </tr>
-      </tbody>
+          <td> {{ i + 1
+    }}</td>
+    <td> {{ course.courseId }} </td>
+    <td> {{ course.name }}</td>
+    <td> {{ course.fee }}</td>
+    <td>
+      <button (click)="registerCourse(course.courseId)"
+              type="button" class="btn btn-info">
+        Register Now
+      </button>
+    </td>
+    </tr>
+    </tbody>
     </table>
   </div>
 </div>

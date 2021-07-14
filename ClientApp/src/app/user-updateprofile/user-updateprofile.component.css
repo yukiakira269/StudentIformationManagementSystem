@@ -1,0 +1,21 @@
+.container {
+    width: auto;
+    height: 100%;
+}
+
+.container form {
+    width: 60%;
+    float: left;
+}
+.container .avt {
+    width: 40%;
+    height: 40%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+.avt img {
+    transform: scale(1.5);
+}

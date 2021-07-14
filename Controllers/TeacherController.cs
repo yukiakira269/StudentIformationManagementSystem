@@ -87,6 +87,10 @@ namespace SIMS.Controllers
             return Json(data);
         }
 
-
+        [HttpGet("GetTeacherInfo")]
+        public Teacher GetStudentInfo([FromQuery] string email)
+        {
+            return UserRepository.GetTeacherFromMail(email);
+        }
     }
 }

@@ -20,7 +20,9 @@ import { HomeComponent } from './home/home.component';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserUpdateprofileComponent } from './user-updateprofile/user-updateprofile.component';
 import { GuestNavComponent } from './guest-nav/guest-nav.component';
+
 import { TeacherComponent } from './teacher/teacher.component';
 import { TeacherNavComponent } from './teacher-nav/teacher-nav.component';
 import { TeacherViewclassesComponent } from './teacher-viewclasses/teacher-viewclasses.component';
@@ -46,7 +48,9 @@ import { AdminComponent } from './admin/admin.component';
     NavMenuComponent,
     HomeComponent,
     UserProfileComponent,
+    UserUpdateprofileComponent,
     GuestNavComponent,
+
     TeacherComponent,
     TeacherNavComponent,
     TeacherViewclassesComponent,
@@ -84,6 +88,7 @@ import { AdminComponent } from './admin/admin.component';
     RouterModule.forRoot([
       { path: '', component: UserProfileComponent, pathMatch: 'full' },
       { path: 'home', component: UserProfileComponent },
+      { path: 'profile', component: UserUpdateprofileComponent },
       { path: 'teacher', component: TeacherComponent },
       { path: 'teacher/viewclass', component: TeacherViewclassesComponent },
       { path: 'teacher/viewgrades', component: TeacherViewgradesComponent },

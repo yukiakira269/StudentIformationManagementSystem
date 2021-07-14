@@ -35,11 +35,11 @@
         <app-admin-nav></app-admin-nav>
       </div>
       <div *ngIf="!unauth">
+        <button (click)="auth.signOut()" class="float-right">Logout</button>
         <h2>Howdy, {{ user.displayName }}.</h2>
         <p>UID: {{ user.uid }}.</p>
         <p>Role: "{{role}}".</p>
         <img [src]="user.photoURL" style="margin-bottom: 32px; border: 2px solid #2f2f2f; border-radius: 5px;">
-        <br/><button (click)="auth.signOut()">Logout</button>
       </div>
       <div *ngIf="unauth">
         <h1 class="text-danger">

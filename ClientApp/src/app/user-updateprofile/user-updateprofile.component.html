@@ -1,0 +1,125 @@
+<p *ngIf="!isLoaded && !curStudent && !curTeacher"><em>Loading.....</em></p>
+
+<p *ngIf="isLoaded && !curStudent && !curTeacher"><em>Data load failed.</em></p>
+
+<div *ngIf="curStudent" class="container">
+  <app-student-nav></app-student-nav>
+
+  <div *ngIf="canAlert">
+    <div class="alert alert-success" role="alert" *ngIf="updateSuccess">
+      Update profile successfully.
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="!updateSuccess">
+      Update profile failed.
+    </div>
+  </div>
+
+  <div class="avt">
+    <img [src]="photoURL" style="border: 2px solid #2f2f2f; border-radius: 5px;">
+  </div>
+
+  <form #updateForm="ngForm" (ngSubmit)="updateStudent(updateForm)">
+    <label for="studentId">StudentId</label>
+    <input disabled
+           class="form-control" type="text" name="studentId"
+           value="{{ curStudent.studentId }}" />
+    <input type="hidden" class="form-control" name="studentId"
+           #studentId="ngModel" [(ngModel)]="curStudent.studentId" />
+    <div class="text-danger" *ngIf="studentId.errors?.required">
+      Id is required.
+    </div>
+    <label for="name">Name</label>
+    <input required class="form-control" type="text" name="name"
+           placeholder="{{ curStudent.name }}"
+           #name="ngModel" [(ngModel)]="curStudent.name" />
+    <div class="text-danger" *ngIf="name.errors?.required">
+      Name is required.
+    </div>
+    <label for="address">Address</label>
+    <input required class="form-control" type="text" name="address"
+           value="{{ curStudent.address }}"
+           #address="ngModel" [(ngModel)]="curStudent.address" />
+    <div class="text-danger" *ngIf="address.errors?.required">
+      Address is required.
+    </div>
+    <label for="email">Email</label>
+    <input disabled class="form-control" type="text" name="email"
+           value="{{ curStudent.email }}" />
+    <input class="form-control" type="hidden" name="email"
+           #email="ngModel" [(ngModel)]="curStudent.email" />
+    <div class="text-danger" *ngIf="email.errors?.required">
+      Email is required.
+    </div>
+    <button id="save" [disabled]="!updateForm.valid"
+            class="btn btn-primary" type="submit" style="margin-top: 16px;">
+      Save
+    </button>
+  </form>
+</div>
+
+<div *ngIf="curTeacher" class="container">
+  <app-teacher-nav></app-teacher-nav>
+
+  <div *ngIf="canAlert">
+    <div class="alert alert-success" role="alert" *ngIf="updateSuccess">
+      Update profile successfully.
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="!updateSuccess">
+      Update profile failed.
+    </div>
+  </div>
+
+  <div class="avt">
+    <img [src]="photoURL" style="border: 2px solid #2f2f2f; border-radius: 5px;">
+  </div>
+
+  <div *ngIf="canAlert">
+    <div class="alert alert-success" role="alert" *ngIf="updateSuccess">
+      Update profile successfully.
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="!updateSuccess">
+      Update profile failed.
+    </div>
+  </div>
+
+  <form #updateForm="ngForm" (ngSubmit)="updateTeacher(updateForm)">
+    <label for="teacherId">TeacherId</label>
+    <input disabled class="form-control" type="text" name="teacherId"
+           value="{{ curTeacher.teacherId }}" />
+    <input type="hidden" class="form-control" name="teacherId"
+           #teacherId="ngModel" [(ngModel)]="curTeacher.teacherId" />
+    <div class="text-danger" *ngIf="teacherId.errors?.required">
+      Id is required.
+    </div>
+    <label for="name">Name</label>
+    <input required class="form-control" type="text" name="name"
+           value="{{ curTeacher.name }}"
+           #name="ngModel" [(ngModel)]="curTeacher.name" />
+    <div class="text-danger" *ngIf="name.errors?.required">
+      Name is required.
+    </div>
+    <label for="email">Email</label>
+    <input disabled class="form-control" type="text" name="email"
+           value="{{ curTeacher.email }}" />
+    <input class="form-control" type="hidden" name="email"
+           #email="ngModel" [(ngModel)]="curTeacher.email" />
+    <label for="phone">Phone</label>
+    <input required class="form-control" type="text" name="phone"
+           value="{{ curTeacher.phone }}"
+           #phone="ngModel" [(ngModel)]="curTeacher.phone" />
+    <div class="text-danger" *ngIf="phone.errors?.required">
+      Phone number is required.
+    </div>
+    <label for="faculty">Faculty</label>
+    <input required class="form-control" type="text" name="faculty"
+           value="{{ curTeacher.faculty }}"
+           #faculty="ngModel" [(ngModel)]="curTeacher.faculty" />
+    <div class="text-danger" *ngIf="phone.errors?.required">
+      Faculty is required.
+    </div>
+    <button id="save" [disabled]="!updateForm.valid"
+            class="btn btn-primary" type="submit" style="margin-top: 16px;">
+      Save
+    </button>
+  </form>
+</div>

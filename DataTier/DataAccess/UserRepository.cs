@@ -78,5 +78,20 @@ namespace SIMS.DataTier.DataAccess
             }
             return null;
         }
+
+        public static Teacher GetTeacherFromMail(string mail)
+        {
+            using var ctx = new SIMSContext();
+            try
+            {
+                if (ctx.Students.SingleOrDefault(u => u.Email.Equals(mail)) != null)
+                    return ctx.Teachers.SingleOrDefault(u => u.Email.Equals(mail));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            return null;
+        }
     }
 }

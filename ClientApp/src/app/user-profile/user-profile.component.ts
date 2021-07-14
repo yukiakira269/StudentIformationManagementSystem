@@ -51,7 +51,6 @@ export class UserProfileComponent implements OnInit {
           this.unauth = true;
         if (this.role)
           console.log("Role: " + JSON.stringify(this.role));
-
         this.isLoaded = true;
       }, err => {
         console.error(err);

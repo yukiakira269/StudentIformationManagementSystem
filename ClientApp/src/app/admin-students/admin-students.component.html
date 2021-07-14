@@ -43,13 +43,13 @@
             <div class="text-danger" *ngIf="address.errors?.required">
               Address is required.
             </div>
-            <label for="email">Phone</label>
-            <input disabled class="form-control" type="text" name="email"
+            <label for="email">Email</label>
+            <input disabled class="form-control" type="email" name="email"
                    value="{{ m.email }}" />
             <input class="form-control" type="hidden" name="email"
                    #email="ngModel" [(ngModel)]="m.email" />
             <div class="text-danger" *ngIf="email.errors?.required">
-              Phone Number is required.
+              Email is required.
             </div>
             <button class="btn btn-primary" type="submit">Athorise</button>
           </form>
